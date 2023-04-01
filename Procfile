@@ -1,1 +1,1 @@
-web: npm run build && npm start && npm install --force
+web: npm run build && npm start && npm install --legacy-peer-deps
