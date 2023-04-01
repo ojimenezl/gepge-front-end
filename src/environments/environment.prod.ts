@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://mi-domino.com/api'
+  apiUrl: 'https://gepge-back-end.herokuapp.com'
 };
