@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Advertencia
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text class="text-color" *ngIf="Terminado">
+    <h2>Advertencia</h2>
+    <p>Ingresa el código solo cuando hayas recibido el pago.</p>
+    <ion-button (click)="scrollToBottom()">Mostrar</ion-button>
+  </ion-text>
+  <ion-text class="text-color" *ngIf="Terminado">
+    <form [formGroup]="AdForm" (ngSubmit)="addAd()">
+      <ion-item>
+        <ion-label position="floating">Ingresa el código de 5 dígitos</ion-label>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="2" class="content-color-card">
+              <ion-input type="number" min="0" max="9" formControlName="digit1" placeholder="0"></ion-input>
+            </ion-col>
+            <ion-col size="2">
+              <ion-input type="number" min="0" max="9" formControlName="digit2" placeholder="0"></ion-input>
+            </ion-col>
+            <ion-col size="2">
+              <ion-input type="number" min="0" max="9" formControlName="digit3" placeholder="0"></ion-input>
+            </ion-col>
+            <ion-col size="2">
+              <ion-input type="number" min="0" max="9" formControlName="digit4" placeholder="0"></ion-input>
+            </ion-col>
+            <ion-col size="2">
+              <ion-input type="number" min="0" max="9" formControlName="digit5" placeholder="0"></ion-input>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-text class="text-color">
+        <div style="text-align: center;">
+          <ng-container *ngIf="codigoCorrecto; else otroContenido">
+            <p>Correcto!!</p>
+          </ng-container>
+          <ng-template #otroContenido>
+            <p>El código no es correcto</p>
+          </ng-template>
+        </div>
+      </ion-text>
+    <ion-button type="submit" expand="block" [disabled]="!AdForm.valid" (click)="validar()" color="tertiary">Validar</ion-button>
+
+    </form>
+    
+  </ion-text>
+
+
+
+  <ion-text class="text-color" *ngIf="Recibido">
+    <h2>Advertencia</h2>
+    <p>Entrega tu código solo cuando hayas recibido el producto.</p>
+    <ion-button (click)="scrollToBottom()">Mostrar</ion-button>
+  </ion-text>
+
+  <ion-text class="text-color" *ngIf="Recibido">
+    <h3>Codigo</h3>
+    <div style="text-align: center;">
+      <h4>{{ codigopop }}</h4>
+    </div>
+  </ion-text>
+
+  
+</ion-content>

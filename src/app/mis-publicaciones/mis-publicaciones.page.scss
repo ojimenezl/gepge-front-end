@@ -1,0 +1,9 @@
+p{
+    color: #ffffff;
+    &.p-dark{
+      color: #000;
+    }
+  }
+  .eliminate-button {
+    --ion-color-primary: #C71071; // Define el color morado que deseas
+  }

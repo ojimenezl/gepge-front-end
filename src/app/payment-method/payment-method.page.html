@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Metodo de Pago
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="creditCardForm">
+    <ion-item>
+      <ion-label position="floating">Número de tarjeta de crédito</ion-label>
+      <ion-input type="text" formControlName="cardNumber" placeholder="1234 5678 9012 3456" autocomplete="cc-number" autocorrect="off" spellcheck="off" inputmode="numeric"></ion-input>
+      <ion-icon name="card-outline" slot="start"></ion-icon>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Nombre del titular de la tarjeta</ion-label>
+      <ion-input type="text" formControlName="cardHolderName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Fecha de expiración</ion-label>
+      <ion-input type="text" formControlName="expirationDate"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Código de seguridad (CVV)</ion-label>
+      <ion-input type="text" formControlName="securityCode"></ion-input>
+    </ion-item>
+    <ion-button (click)="onSubmit()" type="submit" [disabled]="!creditCardForm.valid" expand="block">Continuar</ion-button>
+
+  </form>
+</ion-content>

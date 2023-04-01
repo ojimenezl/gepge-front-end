@@ -1,0 +1,143 @@
+<ion-menu contentId="main-content" side="end">
+  <ion-header>
+    <ion-toolbar class="header-color">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="menu-content">
+    <ion-list>
+      <ion-list-header>Persona</ion-list-header>
+      <ion-item class="menu-item" (click)="goToMiPerfil()" button>
+        <ion-icon  slot="start" name="person-outline"></ion-icon>
+        Mi perfil
+      </ion-item>
+      <ion-item class="menu-item" (click)="goToMisPublicaciones()" button>
+        <ion-icon  slot="start" name="person-outline"></ion-icon>
+        Mis Publicaciones
+      </ion-item>
+      <ion-item class="menu-item" (click)="goToMisTrabajos()" button>
+        <ion-icon  slot="start" name="person-outline"></ion-icon>
+        Mis Trabajos
+      </ion-item>
+      <ion-item class="menu-item" (click)="goToNotificaciones()" button>
+        <ion-icon  slot="start" name="person-outline"></ion-icon>
+        Mis Notificaciones
+      </ion-item>
+      
+      <ion-list-header>App</ion-list-header>
+      <ion-item class="menu-item" (click)="goToCreateAd()" button>
+        <ion-icon  slot="start" name="person-outline"></ion-icon>
+        Crear Anuncio
+      </ion-item>
+      <ion-item class="menu-item" (click)="toggleDarkMode()">
+        <ion-label>Tema oscuro</ion-label>
+        <ion-toggle [(ngModel)]="darkModeEnabled" (ionChange)="toggleDarkMode()"></ion-toggle>
+      </ion-item>
+      <ion-item class="menu-item" button>
+        <ion-icon  slot="start" name="settings-outline"></ion-icon>
+        Configuración
+      </ion-item>
+      <ion-item class="menu-item" button>
+        <ion-icon  slot="start" name="information-circle-outline"></ion-icon>
+        Acerca de
+      </ion-item>
+      <ion-item class="menu-item" (click)="login()" button>
+        <ion-icon  slot="start" name="log-out-outline"></ion-icon>
+        Cerrar sesión
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<div class="ion-page" id="main-content">
+<ion-header>
+  <ion-toolbar class="header-color">
+    <ion-buttons slot="start">
+    </ion-buttons>
+    <ion-title>
+      Feed
+    </ion-title>
+    <ion-buttons slot="end">
+      
+      <ion-button class="add-ad-button" id="add-ad-button" (click)="goToCreateAd()">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+
+      <ion-button (click)="showNotifications()">
+        <ion-icon name="notifications"></ion-icon>
+        <ion-badge *ngIf="newNotificationsCount > 0" color="tertiary">{{ newNotificationsCount }}</ion-badge>
+      </ion-button>
+
+      <ion-button>
+        <ion-menu-button menuToggle autoHide="false"></ion-menu-button>
+      </ion-button>
+      
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar [(ngModel)]="searchText" class="search-color" (ionInput)="onSearchInput($event)"></ion-searchbar>
+
+  <ion-card *ngFor="let ad of ads" class="my-card">
+    
+    <ion-card-header>
+      <ion-toolbar class="header-color-card">
+        <ion-buttons slot="start">
+          <ion-card-title>{{ ad.titulo }}</ion-card-title>
+        </ion-buttons>
+
+      <ion-card-content slot="end">
+        <ion-button *ngIf="ad.creador === userId" class="edit-button" slot="end" (click)="editAd(ad)">
+          <ion-icon name="pencil"></ion-icon>
+        </ion-button>
+      
+       
+        <ion-button *ngIf="ad.creador === userId" class="eliminate-button"   slot="end" (click)="eliminateAd(ad)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+        
+       
+        <ion-button *ngIf="ad.creador !== userId && ad.postulante !== userId" class="aplicar-button"  slot="end" (click)="aplicar(ad)">
+          Aplicar<ion-icon name="hammer-outline"></ion-icon>
+        </ion-button>
+
+
+        <ion-button *ngIf="ad.postulante === userId" slot="end">
+          Enviado
+        </ion-button>
+          
+    </ion-card-content>
+  </ion-toolbar>
+    </ion-card-header>
+
+    <ion-card-content class="content-color-card">
+      <p>{{ ad.lugarAnunciante }}</p>
+      <p>{{ ad.descripcion }}</p>
+      
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col size="4" class="ion-text-center">
+        <ion-icon class="icon-card" name="cash-outline" [color]="ad.precioAnunciante > 0 ? 'tertiary' : 'medium'" color="tertiary"></ion-icon>
+        <p class="ion-text-wrap">{{ ad.precioAnunciante | currency:'USD':'symbol':'1.2-2' }}</p>
+      </ion-col>
+      <ion-col size="4" class="ion-text-center">
+        <ion-icon class="icon-card" name="time-outline" color="tertiary"></ion-icon>
+        <p class="ion-text-wrap">{{ ad.tiempoAnunciante }}</p>
+      </ion-col>
+      <ion-col size="4" class="ion-text-center">
+        <ion-icon class="icon-card" name="car-outline" *ngIf="ad.transporte === 'true'" color="tertiary"></ion-icon>
+        <p class="ion-text-wrap" *ngIf="ad.transporte === 'true'">Si</p>
+      </ion-col> 
+    </ion-row>
+
+
+    
+    
+  </ion-card>
+</ion-content>
+
+</div>
+

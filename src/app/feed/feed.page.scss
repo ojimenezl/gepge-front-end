@@ -1,0 +1,84 @@
+.edit-button {
+    --ion-color-primary: #4A10C7; // Define el color morado que deseas
+  }
+
+.eliminate-button {
+    --ion-color-primary: #C71071; // Define el color morado que deseas
+  }
+
+.aplicar-button {
+    --ion-color-primary: #7b4ae6;// #F9D73B; // Define el color morado que deseas
+
+  }
+
+.my-card {
+    background-color: #e6e6e6e6; // Fondo blanco
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.471); // Sombra
+    margin-bottom: 16px; // Margen inferior
+    border-radius: 20px;
+  
+    &.card-dark {
+      border-radius: 5px;
+      background-color: #222222; // Fondo oscuro
+      color: #ffffff; // Texto blanco
+      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); // Sombra
+    }
+}
+
+
+.header-dark {
+  --background: #222222; // Fondo oscuro
+  color: #ffffff; // Texto blanco
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); // Sombra
+  border-radius: 5px;
+}
+
+p{
+  color: black;
+  &.p-dark{
+    color: #ffffff;
+  }
+}
+
+.header-color-card{
+  --background: #000000;
+  border-radius: 5px;
+  padding-left: 10px;
+
+  &.header-card-dark {
+    --background: #5e17ab; // Fondo oscuro
+    color: #ffffff; // Texto blanco
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); // Sombra
+  }
+}
+
+.content-color-card{
+  font-family: 'Courier New', Courier, monospace;
+  padding-left: 30px;
+}
+
+.search-color{
+  --background: #ffffff87;
+  border-radius: 5px;
+  color: #000000;
+  &.header-card-dark {
+    --background: #ffffff87; // Fondo oscuro
+    color: #000000; // Texto blanco
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); // Sombra
+  }
+}
+
+.menu-item{
+  --color: #ffffff;
+  &.menu-item-dark{
+    --background:transparent;
+  }
+}
+
+.menu-content{
+  --background: transparent;
+}
+
+.icon-card {
+  font-size: 2.5em;
+}

@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Sign Up
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="signUpForm" (ngSubmit)="registerUser()">
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input type="text" formControlName="nombre"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" formControlName="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Cedula</ion-label>
+      <ion-input type="number" formControlName="cedula"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Celular</ion-label>
+      <ion-input type="tel" formControlName="celular"></ion-input>
+      <ion-icon name="flag-outline" slot="end"></ion-icon>
+      <ion-input type="text" value="+593" slot="start" disabled></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Ciudad</ion-label>
+      <ion-select formControlName="ciudad">
+        <ion-select-option value="Quito">Quito</ion-select-option>
+        <ion-select-option value="Guayaquil">Guayaquil</ion-select-option>
+        <ion-select-option value="Cuenca">Cuenca</ion-select-option>
+        <ion-select-option value="Manta">Manta</ion-select-option>
+        <!-- Añade más opciones aquí -->
+      </ion-select>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Fecha Nacimiento</ion-label>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4">
+            <ion-select formControlName="dia" placeholder="Día">
+              <ion-select-option *ngFor="let dia of dias" [value]="dia">{{dia}}</ion-select-option>
+            </ion-select>
+          </ion-col>
+          <ion-col size="4">
+            <ion-select formControlName="mes" placeholder="Mes">
+              <ion-select-option *ngFor="let mes of meses" [value]="mes">{{mes}}</ion-select-option>
+            </ion-select>
+          </ion-col>
+          <ion-col size="4">
+            <ion-select formControlName="year" placeholder="Año">
+              <ion-select-option *ngFor="let anio of year" [value]="anio">{{anio}}</ion-select-option>
+            </ion-select>
+          </ion-col>
+        </ion-row>
+        
+      </ion-grid>
+    </ion-item>
+    
+    
+    
+    
+    
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <!-- <ion-item>
+      <ion-label position="floating">Confirm Password</ion-label>
+      <ion-input type="password" formControlName="confirmPassword"></ion-input>
+    </ion-item> -->
+
+    <ion-button type="submit" expand="block" [disabled]="!signUpForm.valid">Register</ion-button>
+  </form>
+</ion-content>

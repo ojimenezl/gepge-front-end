@@ -24,3 +24,58 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+ion-content {
+    --ion-background-color: #ffffffde; 
+  }
+.card-content-md p{
+  font-size: 18px;
+}
+
+body.dark {
+  ion-content {
+    --ion-background-color: #111;
+    color: #fff;
+  }
+}
+
+.dark {
+    //--ion-color-primary: #4a4a4a;
+    --ion-color-secondary: #d4d4d4;
+    //--ion-color-tertiary: #c4c4c4;
+    //--ion-color-success: #5e17ab;
+    //--ion-color-warning: #d4d4d4;
+    //--ion-color-danger: #1c1c1c;
+    --ion-color-dark: #d4d4d4;
+    --ion-color-medium: #c4c4c4;
+    --ion-color-light: #4a4a4a;
+      p{
+        color: #d4d4d4;
+      }
+      
+      ion-item {
+        --background: transparent;
+        --color: #ffffff;
+        --border-color: rgba(61, 61, 61, 0.608);
+        //box-shadow: 0 2px 8px rgba(42, 42, 42, 0.1);
+      }
+    
+  }
+  
+.header-color{
+    --background: #000000;
+}
+.btn-login{
+  --background:black;
+  &.btn-login-dark {
+      --background: #5e17ab; // Fondo oscuro
+      color: #ffffff; // Texto blanco
+      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); // Sombra
+    }
+}
+
+ion-item {
+  --background: transparent;
+  --color: black;
+  --border-color: rgba(87, 16, 168, 0.134);
+}

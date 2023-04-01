@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+     Editar Anuncio
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="AdForm" (ngSubmit)="addAd()">
+    <ion-item>
+      <ion-label position="floating">Titulo</ion-label>
+      <ion-textarea formControlName="titulo"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">¿Qué necesitas?</ion-label>
+      <ion-textarea formControlName="descripcion"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Precio</ion-label>
+      <ion-input type="number" step="0.01" formControlName="precioAnunciante"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Lugar</ion-label>
+      <ion-select formControlName="lugarAnunciante">
+        <ion-select-option value="Quito">Quito</ion-select-option>
+        <ion-select-option value="Guayaquil">Guayaquil</ion-select-option>
+        <ion-select-option value="Cuenca">Cuenca</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>¿Necesita taxi?</ion-label>
+      <ion-toggle formControlName="transporte"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">¿En cuanto tiempo deseas?</ion-label>
+      <ion-textarea formControlName="tiempoAnunciante"></ion-textarea>
+    </ion-item>
+ 
+    <ion-item>
+      <ion-label position="stacked">Pago</ion-label>
+      <ion-select formControlName="tipoPago">
+        <ion-select-option value="tarjeta">Tarjeta</ion-select-option>
+        <ion-select-option value="efectivo">Efectivo</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button type="submit" expand="block" [disabled]="!AdForm.valid">Register</ion-button>
+  </form>
+</ion-content>
