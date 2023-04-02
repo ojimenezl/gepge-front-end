@@ -5,15 +5,18 @@
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --legacy-peer-deps",
+    "start": "node server.js",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "^15.0.0",
+    "@angular/cli": "^15.0.0",
+    "@angular/common": "^15.1.5",
+    "@angular/compiler": "^15.0.0",
     "@angular/core": "^15.0.0",
     "@angular/forms": "^15.1.5",
     "@angular/platform-browser": "^15.0.0",
@@ -30,12 +33,15 @@
     "@ionic/angular": "^6.1.9",
     "@react-native-google-signin/google-signin": "^9.0.2",
     "angularx-social-login": "^4.1.0",
+    "express": "^4.18.2",
     "ionic-input-mask": "^1.0.1",
     "ionicons": "^6.0.3",
     "mongodb": "^5.0.1",
     "ng2-google-login": "^1.0.2",
+    "path": "^0.12.7",
     "rxjs": "^6.6.7",
     "tslib": "^2.3.0",
+    "typescript": "~4.8.4",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -68,6 +74,10 @@
     "karma-jasmine-html-reporter": "~2.0.0",
     "ts-node": "~8.3.0",
     "typescript": "~4.8.4"
+  },
+  "engines": {
+    "node": "16.14.2",
+    "npm": "8.5.0"
   },
   "description": "An Ionic project"
 }
