@@ -10,7 +10,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "heroku-postbuild": "ng build"
+    "heroku-postbuild": "ng build",
+    "postinstall": "npm install -g @angular/cli"
   },
   "private": true,
   "dependencies": {
