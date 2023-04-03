@@ -79,6 +79,7 @@ export class TerminadoPage implements OnInit {
               const data = {
                 codigoTrabajador: randomNumber
               };
+              this.codigo=randomNumber.toString()
               this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${this.anuncioId}`, data).subscribe(response => {
                 console.log(response);                
               });

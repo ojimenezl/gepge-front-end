@@ -8,6 +8,9 @@ import { ModalController } from '@ionic/angular';
 import { NotificationPage } from '../notification/notification.page';
 import { MenuController } from '@ionic/angular';
 import { environment } from '../../environments/environment';
+import { DatePipe } from '@angular/common';
+
+import * as moment from 'moment';
 
 interface ApiResponseNotification {
   mensaje: string;
@@ -64,9 +67,11 @@ export class FeedPage implements OnInit {
   ad: any[] = [];
   enEspera:  any[] = [];
   newNotificationsCount = 0;
+
 //  private isPageLoaded: boolean = false;
   searchText: string = '';
   darkModeEnabled = false;
+  formattedTimeString: string | null | undefined;
 
 
   constructor(private menuController: MenuController,private modalController: ModalController,private navCtrl: NavController, private router: Router, private http: HttpClient) {
@@ -78,6 +83,7 @@ export class FeedPage implements OnInit {
   ngOnInit() {   
     this.getAds();
     this.contNotifications();
+    
   }
   ionViewWillEnter(){
     this.getAds();
@@ -88,18 +94,15 @@ export class FeedPage implements OnInit {
       data => {
         this.ads = data.clientes.sort((a, b) => new Date(b.fechaCreacion).getTime() - new Date(a.fechaCreacion).getTime());
         this.enEspera  = this.ads.filter(ad => ad.idAnuncioPrincipal && ad.postulante === this.userId);
-        console.log('para if ',this.enEspera);
         if(this.enEspera.length>0){        
-          this.enEspera.forEach(res => {
-          console.log('en Espera',res);
+          //this.enEspera.forEach(res => {
           this.ads  = this.ads.filter(ad => ad.postulante === '' && ad.estado === '0' || ad.postulante === this.userId);
           this.ads = this.ads.filter(ad =>  ad._id !== ad.idAnuncioPrincipal);
-
-          console.log('feedconespera',this.ads);
-        });
+          // this.ads.forEach(res => {
+          //   res.tiempoAnunciante= res.tiempoAnunciante.slice(11, 16);
+          // });  
+        //});
         }else{
-          console.log("aqui");
-          
           this.ads  = this.ads.filter(ad => ad.postulante === '' && ad.estado === '0' );
           console.log('feed',this.ads);
         }
@@ -249,6 +252,20 @@ export class FeedPage implements OnInit {
         }
 
     }
+
+    getTiempoTranscurrido(fechaSeleccionada: any): string {
+      const fecha = moment(fechaSeleccionada);
+      const diferencia = moment().diff(fecha, 'minutes');
+      
+      if (diferencia < 60) {
+        return `hace ${diferencia} minutos`;
+      } else if (diferencia < 1440) {
+        return `hace ${moment().diff(fecha, 'hours')} horas`;
+      } else {
+        return `hace ${moment().diff(fecha, 'days')} días`;
+      }
+    }
+    
     
     
 }

@@ -23,23 +23,29 @@
       <ion-input type="number" step="0.01" formControlName="precioAnunciante"></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Lugar</ion-label>
-      <ion-select formControlName="lugarAnunciante">
-        <ion-select-option value="Quito">Quito</ion-select-option>
-        <ion-select-option value="Guayaquil">Guayaquil</ion-select-option>
-        <ion-select-option value="Cuenca">Cuenca</ion-select-option>
-      </ion-select>
-    </ion-item>
 
+  
+    <ion-item>
+      <ion-label>Lugar</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-searchbar class="serch-map" formControlName="lugarAnunciante" [(ngModel)]="autocomplete.input" (ionInput)="UpdateSearchResults()" placeholder="Search for a place" (ionClear)="ClearAutocomplete()"></ion-searchbar>
+    </ion-item>
+    
+    <ion-list class="serch-map" *ngIf="showResults && autocompleteItems.length > 0">
+      <ion-item class="serch-map" *ngFor="let item of autocompleteItems" tappable (click)="SelectSearchResult(item)">
+        {{ item.description }}
+      </ion-item>
+    </ion-list>
+    
     <ion-item>
       <ion-label>¿Necesita taxi?</ion-label>
       <ion-toggle formControlName="transporte"></ion-toggle>
-    </ion-item>
+    </ion-item> 
 
     <ion-item>
-      <ion-label position="floating">¿En cuanto tiempo deseas?</ion-label>
-      <ion-textarea formControlName="tiempoAnunciante"></ion-textarea>
+      <ion-label>Seleccione la hora</ion-label>
+      <ion-input type="time" formControlName="tiempoAnunciante"></ion-input>
     </ion-item>
  
     <ion-item>

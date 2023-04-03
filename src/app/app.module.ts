@@ -10,7 +10,9 @@ import { SocialLoginModule,GoogleLoginProvider} from 'angularx-social-login';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SocialAuthServiceConfig } from 'angularx-social-login';
-
+//IMPORTAMOS GEOLOCATION Y GEOCODER
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +28,9 @@ import { SocialAuthServiceConfig } from 'angularx-social-login';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     GooglePlus,
     NativeStorage,
+    //AÑADIMOS GEOLOCATION Y GEOCODER
+    Geolocation,    
+    NativeGeocoder,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

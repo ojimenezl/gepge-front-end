@@ -104,7 +104,7 @@
         </ion-button>
 
 
-        <ion-button *ngIf="ad.postulante === userId" slot="end">
+        <ion-button *ngIf="ad.postulante === userId" slot="end" class="enviado-button">
           Enviado
         </ion-button>
           
@@ -113,6 +113,7 @@
     </ion-card-header>
 
     <ion-card-content class="content-color-card">
+      <h5>{{getTiempoTranscurrido(ad.fechaCreacion)}}</h5>
       <p>{{ ad.lugarAnunciante }}</p>
       <p>{{ ad.descripcion }}</p>
       
@@ -125,7 +126,7 @@
       </ion-col>
       <ion-col size="4" class="ion-text-center">
         <ion-icon class="icon-card" name="time-outline" color="tertiary"></ion-icon>
-        <p class="ion-text-wrap">{{ ad.tiempoAnunciante }}</p>
+        <p class="ion-text-wrap">{{ad.tiempoAnunciante}}</p>
       </ion-col>
       <ion-col size="4" class="ion-text-center">
         <ion-icon class="icon-card" name="car-outline" *ngIf="ad.transporte === 'true'" color="tertiary"></ion-icon>

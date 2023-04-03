@@ -1,5 +1,5 @@
 .edit-button {
-    --ion-color-primary: #4A10C7; // Define el color morado que deseas
+    --ion-color-primary: #5b2bc2; // Define el color morado que deseas
   }
 
 .eliminate-button {
@@ -7,7 +7,11 @@
   }
 
 .aplicar-button {
-    --ion-color-primary: #7b4ae6;// #F9D73B; // Define el color morado que deseas
+    --ion-color-primary: #5b2bc2;// #F9D73B; // Define el color morado que deseas
+
+  }
+.enviado-button {
+    --ion-color-primary: #C71071;// #F9D73B; // Define el color morado que deseas
 
   }
 
@@ -19,17 +23,17 @@
   
     &.card-dark {
       border-radius: 5px;
-      background-color: #222222; // Fondo oscuro
+      background-color: #1f1f23; // Fondo oscuro
       color: #ffffff; // Texto blanco
-      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); // Sombra
+      //box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); // Sombra
     }
 }
 
 
 .header-dark {
-  --background: #222222; // Fondo oscuro
+  --background: #000000; // Fondo oscuro
   color: #ffffff; // Texto blanco
-  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); // Sombra
+ // box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); // Sombra
   border-radius: 5px;
 }
 
@@ -46,9 +50,9 @@ p{
   padding-left: 10px;
 
   &.header-card-dark {
-    --background: #5e17ab; // Fondo oscuro
+    --background: #4A10C7; // Fondo oscuro
     color: #ffffff; // Texto blanco
-    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); // Sombra
+    //box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); // Sombra
   }
 }
 
@@ -61,10 +65,10 @@ p{
   --background: #ffffff87;
   border-radius: 5px;
   color: #000000;
-  &.header-card-dark {
-    --background: #ffffff87; // Fondo oscuro
-    color: #000000; // Texto blanco
-    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); // Sombra
+  &.search-color {
+    --background: #1f1f23; // Fondo oscuro
+    color: #ffffff; // Texto blanco
+    //box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); // Sombra
   }
 }
 
