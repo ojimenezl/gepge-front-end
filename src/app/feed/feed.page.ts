@@ -32,6 +32,7 @@ interface ApiResponse {
   clientes: {
     _id: string;
     creador: string;
+//    nombreTrabajador: string;
     postulante:string;
     titulo: string;
     descripcion: string;
@@ -54,6 +55,22 @@ interface Anuncio {
   postulante:string;
 
 }
+interface Cliente {
+  mensaje: string;
+  cliente: {
+    nombre:string;
+    email:string;
+    cedula:string;
+    celular:string;
+    ciudad:string;
+    fechaNacimiento:string;
+    //apellido: String,
+    //edad: Number,
+    password:string;
+    fechaCreacion:string;
+    __v: number;
+  }[];
+}
 
 @Component({
   selector: 'app-feed',
@@ -67,6 +84,9 @@ export class FeedPage implements OnInit {
   ad: any[] = [];
   enEspera:  any[] = [];
   newNotificationsCount = 0;
+  dataCliente: any[] = [];
+  cliente: string = '';
+  nombre: string = '';
 
 //  private isPageLoaded: boolean = false;
   searchText: string = '';
@@ -83,6 +103,9 @@ export class FeedPage implements OnInit {
   ngOnInit() {   
     this.getAds();
     this.contNotifications();
+
+    //para obtener nombre del usuario
+    this.getNombre();
     
   }
   ionViewWillEnter(){
@@ -98,6 +121,8 @@ export class FeedPage implements OnInit {
           //this.enEspera.forEach(res => {
           this.ads  = this.ads.filter(ad => ad.postulante === '' && ad.estado === '0' || ad.postulante === this.userId);
           this.ads = this.ads.filter(ad =>  ad._id !== ad.idAnuncioPrincipal);
+          console.log('feed',this.ads);
+          
           // this.ads.forEach(res => {
           //   res.tiempoAnunciante= res.tiempoAnunciante.slice(11, 16);
           // });  
@@ -130,6 +155,9 @@ export class FeedPage implements OnInit {
   goToNotificaciones(){
     this.showNotifications();
   }
+  goTotest(){
+    this.navCtrl.navigateForward('/front-all');
+  }
   login(){
     this.router.navigateByUrl('/login');
   }
@@ -144,11 +172,12 @@ export class FeedPage implements OnInit {
     this.router.navigate(['/edit-ad'], navigationExtras);
   }
   aplicar(ad: Anuncio){
-    console.log("listo",ad);       
+    console.log("listo para apply",this.nombre);       
      const navigationExtras: NavigationExtras = {
        state: {
          ad: ad,
-         anuncioId: ad._id 
+         anuncioId: ad._id,
+         nombreTrabajador:this.nombre 
        }
      };
     this.router.navigate(['/apply'], navigationExtras);
@@ -266,6 +295,18 @@ export class FeedPage implements OnInit {
       }
     }
     
-    
+    getNombre(){
+      this.http.get<Cliente>(`${this.baseUrl}/clientes/obtenerCliente/${this.userId}`).subscribe(
+        data => {
+      this.dataCliente  = data.cliente
+      this.cliente = JSON.stringify(this.dataCliente);
+      const miObjetoParseado = JSON.parse(this.cliente);
+      const miPropiedad = miObjetoParseado;
+      this.nombre=miPropiedad.nombre
+      localStorage.setItem('nombre', this.nombre);
+
+      console.log("nombre ",this.nombre);
+    }
+    )}
     
 }

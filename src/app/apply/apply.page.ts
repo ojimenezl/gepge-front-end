@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { switchMap } from 'rxjs/operators';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+
+declare var google: { maps: { places: { AutocompleteService: new () => any; }; }; };
 
 interface Anuncio {
   _id: string;
@@ -18,6 +22,8 @@ interface Anuncio {
   tiempoTrabajador: string;
   tipoPago:string;
   creador: string;
+  nombreAnunciante:string;
+  nombreTrabajador:string;
   idAnuncioPrincipal:String;
 }
 interface ApiResponse {
@@ -51,9 +57,21 @@ export class ApplyPage implements OnInit {
 
   AdForm: FormGroup;
   anuncioId: string = '';
+  nombreTrabajador: string = '';
   id_new_Anuncio: string ='';
   _idAnuncioHijo: string ='';
-  constructor(private activatedRoute: ActivatedRoute,private formBuilder: FormBuilder, private router: Router,private http: HttpClient) {
+  @ViewChild('map',  {static: false}) mapElement: ElementRef | undefined;
+  map: any;
+  address:string | undefined;
+  lat: string | undefined;
+  long: string | undefined;  
+  autocomplete: { input: string; };
+  autocompleteItems: any[];
+  location: any;
+  placeid: any;
+  GoogleAutocomplete: any;
+  showResults = true;
+  constructor(private geolocation: Geolocation,private nativeGeocoder: NativeGeocoder,public zone: NgZone,private activatedRoute: ActivatedRoute,private formBuilder: FormBuilder, private router: Router,private http: HttpClient) {
     this.AdForm = this.formBuilder.group({
       titulo: ['', Validators.required],
       descripcion: ['', Validators.required],
@@ -66,27 +84,23 @@ export class ApplyPage implements OnInit {
       tiempoTrabajador: ['', Validators.required],
       tipoPago: ['', Validators.required],
       creador: [''],
+      nombreTrabajador: [''],
     });
+    {
+      this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
+      this.autocomplete = { input: '' };
+      this.autocompleteItems = [];
+    }
     this.ad = {} as Anuncio;
   }
 
   ngOnInit() {
-    // this.http.get<ApiResponse>('http://localhost:3001/anuncios/obtenerAnuncios').subscribe(
-    //   data => {
-    //     this.ads = data.clientes.sort((a, b) => new Date(b.fechaCreacion).getTime() - new Date(a.fechaCreacion).getTime());
-    //     this.ads  = this.ads.filter(ad => ad.postulante === '' && ad.estado === '0');
-    //     console.log(this.ads);
-        
-       
-    //   },
-    //   error => {
-    //     console.log(error);
-    //   }
-    // );
     this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation()?.extras?.state?.['ad']) {
         this.ad = this.router.getCurrentNavigation()?.extras?.state?.['ad'];
         this.anuncioId = this.router.getCurrentNavigation()?.extras?.state?.['anuncioId']; // obtener el ID del anuncio
+        this.nombreTrabajador = this.router.getCurrentNavigation()?.extras?.state?.['nombreTrabajador']; // obtener el ID del anuncio
+        
         this.AdForm.patchValue({
           creador: this.ad.creador,
           titulo: this.ad.titulo,
@@ -95,7 +109,8 @@ export class ApplyPage implements OnInit {
           lugarAnunciante: this.ad.lugarAnunciante,
           transporte: this.ad.transporte,
           tiempoAnunciante: this.ad.tiempoAnunciante,
-          tipoPago: this.ad.tipoPago,
+          tipoPago: this.ad.tipoPago
+          //nombreTrabajador:this.nombreTrabajador
         });
       }
     });
@@ -111,6 +126,7 @@ export class ApplyPage implements OnInit {
     //mi anuncio al que postule
     data.estado = '0';
     data.postulante = localStorage.getItem('userId') || '';
+    data.nombreTrabajador = this.nombreTrabajador;
     data.idAnuncioPrincipal = this.ad._id;
     
     this.http.post(`${this.baseUrl}/anuncios/crearAnuncio`, data).pipe(
@@ -145,6 +161,40 @@ export class ApplyPage implements OnInit {
     });
     this.router.navigateByUrl('/feed');
     
+  }
+  //AUTOCOMPLETE, SIMPLEMENTE ACTUALIZAMOS LA LISTA CON CADA EVENTO DE ION CHANGE EN LA VISTA.
+  UpdateSearchResults() {
+    if (this.autocomplete.input == '') {
+      this.autocompleteItems = [];
+      this.showResults = false; // ocultar la lista de sugerencias
+      return;
+    }
+    this.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete.input },
+    (predictions: any[], status: any) => {
+      this.autocompleteItems = [];
+      this.zone.run(() => {
+        predictions.forEach((prediction: any) => {
+          this.autocompleteItems.push(prediction);
+        });
+      });
+      this.showResults = true; // mostrar la lista de sugerencias
+    });
+  }
+
+  
+  //FUNCION QUE LLAMAMOS DESDE EL ITEM DE LA LISTA.
+  SelectSearchResult(item: { place_id: any, description: string }) {   
+    this.autocomplete.input = item.description;
+    this.placeid = item.place_id;
+    this.showResults = false;
+  }
+  
+  
+  
+  //LLAMAMOS A ESTA FUNCION PARA LIMPIAR LA LISTA CUANDO PULSAMOS IONCLEAR.
+  ClearAutocomplete(){
+    this.autocompleteItems = []
+    this.autocomplete.input = ''
   }
   
 

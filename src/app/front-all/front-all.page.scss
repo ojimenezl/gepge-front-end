@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+  }
+  ion-header.scroll-vanish {
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+ 

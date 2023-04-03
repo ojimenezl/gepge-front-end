@@ -37,6 +37,8 @@ interface CreateNotificacion {
   lugar: string;
   creador: string;
   correoTrabajador:string;
+  nombreTrabajador:string,
+  numeroTrabajador:string,
   tipo:string;
   para:string;
   estado: string;
@@ -86,8 +88,7 @@ export class NotificationPage implements OnInit {
     
     //ad.tipo="AceptacionTrabajador"
     //ad.correoTrabajador = ad.correoTrabajador
-    ad.para = ad.correoTrabajador
-    
+    ad.para = ad.correoTrabajador 
     console.log('data notofocatons',ad._idAnuncio,ad._id);
     ad.estado='1'
     const id= ad._id

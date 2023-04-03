@@ -38,7 +38,7 @@
         <ion-icon  slot="start" name="settings-outline"></ion-icon>
         Configuración
       </ion-item>
-      <ion-item class="menu-item" button>
+      <ion-item class="menu-item" (click)="goTotest()"button>
         <ion-icon  slot="start" name="information-circle-outline"></ion-icon>
         Acerca de
       </ion-item>
@@ -68,10 +68,12 @@
         <ion-icon name="notifications"></ion-icon>
         <ion-badge *ngIf="newNotificationsCount > 0" color="tertiary">{{ newNotificationsCount }}</ion-badge>
       </ion-button>
-
+      <p class="search-color">{{ nombre }}</p>
       <ion-button>
         <ion-menu-button menuToggle autoHide="false"></ion-menu-button>
       </ion-button>
+
+     
       
     </ion-buttons>
   </ion-toolbar>

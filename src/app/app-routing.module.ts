@@ -87,6 +87,11 @@ const routes: Routes = [
     path: 'recibir',
     loadChildren: () => import('./recibir/recibir.module').then( m => m.RecibirPageModule)
   },
+  {
+    path: 'front-all',
+    loadChildren: () => import('./front-all/front-all.module').then( m => m.FrontAllPageModule)
+  },
+  
   
 ];
 

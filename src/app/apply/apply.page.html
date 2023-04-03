@@ -9,7 +9,7 @@
 <ion-content class="ion-padding">
   <form [formGroup]="AdForm" (ngSubmit)="addAd()">
     <ion-item>
-      <ion-label>Anunciante:{{ ad.creador }}</ion-label>
+      <ion-label>Anunciante:{{ ad.nombreAnunciante }}</ion-label>
     </ion-item>
     <ion-card>
       <ion-card-header>
@@ -39,7 +39,7 @@
 
 
     <ion-item>
-      <ion-label>Trabajador</ion-label>
+      <ion-label>Trabajador {{nombreTrabajador}}</ion-label>
     </ion-item>
 
     <ion-item>
@@ -53,17 +53,21 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">¿Donde estas?</ion-label>
-      <ion-select formControlName="lugarTrabajador">
-        <ion-select-option value="Quito">Quito</ion-select-option>
-        <ion-select-option value="Guayaquil">Guayaquil</ion-select-option>
-        <ion-select-option value="Cuenca">Cuenca</ion-select-option>
-      </ion-select>
+      <ion-label>Lugar</ion-label>
     </ion-item>
+    <ion-item>
+      <ion-searchbar class="serch-map" formControlName="lugarTrabajador" [(ngModel)]="autocomplete.input" (ionInput)="UpdateSearchResults()" placeholder="Buscar.." (ionClear)="ClearAutocomplete()"></ion-searchbar>
+    </ion-item>
+    
+    <ion-list class="serch-map" *ngIf="showResults && autocompleteItems.length > 0">
+      <ion-item class="serch-map" *ngFor="let item of autocompleteItems" tappable (click)="SelectSearchResult(item)">
+        {{ item.description }}
+      </ion-item>
+    </ion-list>
 
     <ion-item>
-      <ion-label position="floating">¿En que tiempo lo tienes?</ion-label>
-      <ion-textarea formControlName="tiempoTrabajador"></ion-textarea>
+      <ion-label>Seleccione la hora</ion-label>
+      <ion-input type="time" formControlName="tiempoTrabajador"></ion-input>
     </ion-item>
 
     <!-- <ion-item>

@@ -86,3 +86,7 @@ p{
 .icon-card {
   font-size: 2.5em;
 }
+ion-header.scroll-vanish {
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
+}
