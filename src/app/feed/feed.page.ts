@@ -87,6 +87,7 @@ export class FeedPage implements OnInit {
   dataCliente: any[] = [];
   cliente: string = '';
   nombre: string = '';
+  celular: string = '';
 
 //  private isPageLoaded: boolean = false;
   searchText: string = '';
@@ -177,7 +178,8 @@ export class FeedPage implements OnInit {
        state: {
          ad: ad,
          anuncioId: ad._id,
-         nombreTrabajador:this.nombre 
+         nombreTrabajador:this.nombre, 
+         numeroTrabajador:this.celular, 
        }
      };
     this.router.navigate(['/apply'], navigationExtras);
@@ -303,9 +305,11 @@ export class FeedPage implements OnInit {
       const miObjetoParseado = JSON.parse(this.cliente);
       const miPropiedad = miObjetoParseado;
       this.nombre=miPropiedad.nombre
+      this.celular=miPropiedad.celular
       localStorage.setItem('nombre', this.nombre);
+      localStorage.setItem('celular', this.celular);
 
-      console.log("nombre ",this.nombre);
+      console.log("nombre ",this.nombre,this.celular);
     }
     )}
     

@@ -20,41 +20,63 @@
         <p>Tarea:</p>
         <ion-label>{{ ad.descripcion }}</ion-label>
       </ion-item>
+      
       <ion-item>
-        <ion-label>Lugar:</ion-label>
+        <ion-label>Lugar de entrega:</ion-label>
         <ion-label>{{ ad.lugarAnunciante }}</ion-label>
       </ion-item>
+
       <ion-item>
-        <ion-label>Taxi:</ion-label>
-        <ion-label>{{ ad.transporte }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Tiempo:</ion-label>
+        <ion-label>Tiempo de entrega:</ion-label>
         <ion-label>{{ ad.tiempoTrabajador }}</ion-label>
       </ion-item>
+
       <ion-item>
-        <ion-label>Pago:</ion-label>
+        <ion-label>Forma de Pago:</ion-label>
         <ion-label>{{ ad.tipoPago }}</ion-label>
       </ion-item>
-      <ion-item>
-        <ion-label>Precio:</ion-label>
-        <ion-label>{{ ad.precioAnunciante }}</ion-label>
+
+      <ion-item *ngIf="ad.transporte == 'true'">
+        <ion-label>Precio del Taxi:</ion-label>
+        <ion-label>$ {{ ad.precioTransporte }}</ion-label>
       </ion-item>
-      <ion-item>
-        <ion-label>Nombre Trabajador:</ion-label>
-        <ion-label>{{ ad.nombreTrabajador }}</ion-label>
+      <ion-item *ngIf="ad.transporte == 'false'">
+        <ion-label>Taxi:</ion-label>
+        <ion-label>No</ion-label>
       </ion-item>
+
       <ion-item>
-        <ion-label>Número Trabajador:</ion-label>
-        <ion-label>{{ ad.numeroTrabajador }}</ion-label>
+        <ion-label>Precio del trabajo:</ion-label>
+        <ion-label>$ {{ ad.precioTrabajador }}</ion-label>
       </ion-item>
+
       <ion-item>
-        <ion-label>Correo Trabajador:</ion-label>
-        <ion-label>{{ ad.correoTrabajador }}</ion-label>
+        <ion-label>Precio Total:</ion-label>
+        <ion-label>$ {{ precioTotal }}</ion-label>
       </ion-item>
+
       <ion-item>
-        <ion-label>Trabajos Totales:</ion-label>
-        <ion-label>{{ ad.trabajosTotales }}</ion-label>
+        <ion-label>DATOS PERSPNALES DEL ANUNCIANTE:</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Nombre Anunciante:</ion-label>
+        <ion-label>{{ ad.nombreAnunciante }}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Número Anunciante:</ion-label>
+        <ion-label>{{ ad.numeroAnunciante }}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Correo Anunciante:</ion-label>
+        <ion-label>{{ ad.correoAnunciante }}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Contratos Totales del Anunciante:</ion-label>
+        <ion-label>{{ ad.contratosTotales }}</ion-label>
       </ion-item>
 
 

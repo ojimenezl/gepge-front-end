@@ -20,6 +20,7 @@ interface Anuncio {
   tipoPago:string;
   creador: string;
   estado:string;
+  idAnuncioPrincipal:string;
 }
 interface ApiResponse {
   mensaje: string;
@@ -51,6 +52,7 @@ export class MisTrabajosPage implements OnInit {
   ad: Anuncio;
   AdForm: FormGroup;
   anuncioId: string = '';
+  anuncioPrincipal: string = '';
   ads: any[] = [];
   items : any[] = [];
   currentAd: Anuncio | undefined;
@@ -156,15 +158,20 @@ export class MisTrabajosPage implements OnInit {
     this.isModalOpen = isOpen; 
   }
   goToEstadoTrabajador(ad: Anuncio){
-    console.log("listo",ad);       
+    console.log("listo",ad.idAnuncioPrincipal);   
+    this.http.get<ApiResponse>(`${this.baseUrl}/anuncios/obtenerAnuncio/${ad.idAnuncioPrincipal}`).subscribe(
+      data => {
         const navigationExtras: NavigationExtras = {
           state: {
-            ad: ad,
+            ad: data.clientes,
             anuncioId: ad._id 
           }
         };
         this.isModalOpen = false;
     this.router.navigateByUrl('/estado-anuncio-trabajador', navigationExtras);
+
+  })    
+        
   }
 
 }

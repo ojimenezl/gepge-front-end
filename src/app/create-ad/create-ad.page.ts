@@ -44,6 +44,7 @@ export class CreateAdPage implements OnInit {
       tipoPago: ['', Validators.required],
       creador: [''],
       nombreAnunciante: [''],
+      numeroAnunciante: [''],
       postulante: [''],
     });
     {
@@ -68,6 +69,7 @@ export class CreateAdPage implements OnInit {
     console.log(data);
     data.creador = localStorage.getItem('userId') || '';
     data.nombreAnunciante= localStorage.getItem('nombre') || '';
+    data.numeroAnunciante= localStorage.getItem('celular') || '';
     data.postulante = '';
     data.estado='0'
     this.http.post(`${this.baseUrl}/anuncios/crearAnuncio`, data).subscribe(response => {

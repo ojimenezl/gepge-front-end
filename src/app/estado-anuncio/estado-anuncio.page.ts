@@ -11,9 +11,10 @@ interface Anuncio {
   _id: string;
   titulo: string;
   descripcion: string;
-  precioAnunciante: number;
+  precioTrabajador: number;
   lugarAnunciante: string;
   transporte: string;
+  precioTransporte:string;
   tiempoAnunciante: string;
   tiempoTrabajador: string;
   tipoPago:string;
@@ -22,6 +23,9 @@ interface Anuncio {
   correoTrabajador: string;
   numeroTrabajador: string;
   nombreTrabajador: string;
+  correoAnunciante: string;
+  numeroAnunciante: string;
+  nombreAnunciante: string;
 }
 
 
@@ -35,6 +39,7 @@ export class EstadoAnuncioPage implements OnInit {
   ad: Anuncio;
   AdForm: FormGroup;
   anuncioId: string = '';
+  precioTotal: string = '';
   constructor(private modalController: ModalController,private activatedRoute: ActivatedRoute,private formBuilder: FormBuilder, private router: Router,private http: HttpClient) {
     this.AdForm = this.formBuilder.group({
       titulo: ['', Validators.required],
@@ -54,7 +59,11 @@ export class EstadoAnuncioPage implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation()?.extras?.state?.['ad']) {
         this.ad = this.router.getCurrentNavigation()?.extras?.state?.['ad'];
-        this.anuncioId = this.router.getCurrentNavigation()?.extras?.state?.['anuncioId']; // obtener el ID del anuncio
+        this.anuncioId = this.router.getCurrentNavigation()?.extras?.state?.['anuncioId']; // obtener el ID del anuncio        
+        if(this.ad.precioTransporte == ''){
+          this.ad.precioTransporte='0'
+        }
+        this.precioTotal = (this.ad.precioTrabajador+parseFloat(this.ad.precioTransporte)).toString()
         // this.AdForm.patchValue({
         //   titulo: this.ad.titulo,
         //   descripcion: this.ad.descripcion,

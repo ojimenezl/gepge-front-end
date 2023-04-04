@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { ModalController } from '@ionic/angular';
 import { NavigationExtras } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { empty } from 'rxjs';
 
 interface ApiResponse {
   mensaje: string;
@@ -29,17 +30,21 @@ interface Anuncio {
   _id: string;
   titulo: string;
   descripcion: string;
-  precioAnunciante: number;
+  precioTransporte:string;
+  precioTrabajador: number;
   lugarAnunciante: string;
   transporte: string;
   tiempoAnunciante: string;
   tiempoTrabajador: string;
   tipoPago:string;
   creador: string;
-  trabajosTotales: string;
+  contratosTotales: string;
   correoTrabajador: string;
   numeroTrabajador: string;
   nombreTrabajador: string;
+  correoAnunciante: string;
+  numeroAnunciante: string;
+  nombreAnunciante: string;
   
 }
 
@@ -57,6 +62,8 @@ export class EstadoAnuncioTrabajadorPage implements OnInit {
   codigoObj: any[] = [];
   ads: string = '';
   idAnuncioPrincipal: string = '';
+  precioTotal: string = '';
+
 
   constructor(private modalController: ModalController,private activatedRoute: ActivatedRoute,private formBuilder: FormBuilder, private router: Router,private http: HttpClient) {
     this.AdForm = this.formBuilder.group({
@@ -77,7 +84,14 @@ export class EstadoAnuncioTrabajadorPage implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation()?.extras?.state?.['ad']) {
         this.ad = this.router.getCurrentNavigation()?.extras?.state?.['ad'];
-        this.anuncioId = this.router.getCurrentNavigation()?.extras?.state?.['anuncioId']; // obtener el ID del anuncio
+        this.anuncioId = this.router.getCurrentNavigation()?.extras?.state?.['anuncioId']; // obtener el ID del anuncio       
+        if(this.ad.precioTransporte ==''){
+          this.ad.precioTransporte='0'          
+        }
+        this.precioTotal = (this.ad.precioTrabajador+parseFloat(this.ad.precioTransporte)).toString()
+       
+        console.log("ad aqui= ", this.ad);
+        
         // this.AdForm.patchValue({
         //   titulo: this.ad.titulo,
         //   descripcion: this.ad.descripcion,

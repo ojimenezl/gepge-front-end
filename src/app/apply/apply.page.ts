@@ -58,6 +58,7 @@ export class ApplyPage implements OnInit {
   AdForm: FormGroup;
   anuncioId: string = '';
   nombreTrabajador: string = '';
+  numeroTrabajador: string = '';
   id_new_Anuncio: string ='';
   _idAnuncioHijo: string ='';
   @ViewChild('map',  {static: false}) mapElement: ElementRef | undefined;
@@ -100,7 +101,7 @@ export class ApplyPage implements OnInit {
         this.ad = this.router.getCurrentNavigation()?.extras?.state?.['ad'];
         this.anuncioId = this.router.getCurrentNavigation()?.extras?.state?.['anuncioId']; // obtener el ID del anuncio
         this.nombreTrabajador = this.router.getCurrentNavigation()?.extras?.state?.['nombreTrabajador']; // obtener el ID del anuncio
-        
+        this.numeroTrabajador = this.router.getCurrentNavigation()?.extras?.state?.['numeroTrabajador']; 
         this.AdForm.patchValue({
           creador: this.ad.creador,
           titulo: this.ad.titulo,
@@ -127,6 +128,7 @@ export class ApplyPage implements OnInit {
     data.estado = '0';
     data.postulante = localStorage.getItem('userId') || '';
     data.nombreTrabajador = this.nombreTrabajador;
+    data.numeroTrabajador = this.numeroTrabajador;
     data.idAnuncioPrincipal = this.ad._id;
     
     this.http.post(`${this.baseUrl}/anuncios/crearAnuncio`, data).pipe(
