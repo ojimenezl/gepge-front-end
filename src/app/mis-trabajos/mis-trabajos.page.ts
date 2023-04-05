@@ -57,6 +57,8 @@ export class MisTrabajosPage implements OnInit {
   items : any[] = [];
   currentAd: Anuncio | undefined;
   isModalOpen = false;
+  adsString: string = '';
+
 
   constructor(private activatedRoute: ActivatedRoute,private formBuilder: FormBuilder, private router: Router,private http: HttpClient) {
     this.AdForm = this.formBuilder.group({
@@ -117,20 +119,20 @@ export class MisTrabajosPage implements OnInit {
     //}
     
   }
-  addAd() {
-    const data = this.AdForm.value;
-    console.log(data);
-    data.correoTrabajador = localStorage.getItem('userId') || '';
-    this.http.post(`${this.baseUrl}/notificaciones/crearNotificacion`, data).subscribe(response => {
-      console.log(response);
-    });
-    data.postulante = localStorage.getItem('userId') || '';
-    this.http.post(`${this.baseUrl}/anuncios/crearAnuncio`, data).subscribe(response => {
-      console.log(response);
-    });
-    this.router.navigateByUrl('/feed');
+  // addAd() {
+  //   const data = this.AdForm.value;
+  //   console.log(data);
+  //   data.correoTrabajador = localStorage.getItem('userId') || '';
+  //   this.http.post(`${this.baseUrl}/notificaciones/crearNotificacion`, data).subscribe(response => {
+  //     console.log(response);
+  //   });
+  //   data.postulante = localStorage.getItem('userId') || '';
+  //   this.http.post(`${this.baseUrl}/anuncios/crearAnuncio`, data).subscribe(response => {
+  //     console.log(response);
+  //   });
+  //   this.router.navigateByUrl('/feed');
     
-  }
+  // }
   handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
     console.log('Before complete', this.ads);
     this.ads = ev.detail.complete(this.ads);
@@ -143,7 +145,28 @@ export class MisTrabajosPage implements OnInit {
         response => {
           console.log(response);
           // Actualizar la lista de anuncios después de la eliminación
+          this.adsString = JSON.stringify(response);
+          const miObjetoParseado = JSON.parse(this.adsString);
+          console.log("obj",miObjetoParseado.anuncios.correoAnunciante);
+          console.log("length",miObjetoParseado.anuncios.length);
+          // Acceder a la propiedad
+        //  for (let i = 0; i < miObjetoParseado.anuncios.length; i++) {
+           // if (miObjetoParseado.anuncios[0].postulante !== this.userId) {
+            miObjetoParseado.anuncios.para = miObjetoParseado.anuncios.correoAnunciante;
+            miObjetoParseado.anuncios.tipo='RenunciaDelTrabajador'
+            this.http.post(`${this.baseUrl}/notificaciones/crearNotificacion`, miObjetoParseado.anuncios).subscribe(response => {
+              console.log(response,'notificacion eliminsado');
+              
+            });
+            miObjetoParseado.anuncios.estado='0'
+            this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${miObjetoParseado.anuncios.idAnuncioPrincipal}`, miObjetoParseado).subscribe(response => {
+              console.log(response);
+              
+              });
+            //}
+          //}
           this.getAds();
+
         },
         error => {
           console.log(error);

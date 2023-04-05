@@ -107,6 +107,9 @@ export class FeedPage implements OnInit {
 
     //para obtener nombre del usuario
     this.getNombre();
+
+    //tema oscuro por defecto
+    this.toggleDarkMode();
     
   }
   ionViewWillEnter(){

@@ -56,6 +56,8 @@ export class NotificationPage implements OnInit {
   userId: string;
   ads: any[] = [];
   ad: any[] = [];
+  adsString: string = '';
+
   private isPageLoaded: boolean = false;
   constructor(private modalController: ModalController,private navCtrl: NavController, private router: Router, private http: HttpClient) {
     this.userId = localStorage.getItem('userId') || '';
@@ -72,7 +74,8 @@ export class NotificationPage implements OnInit {
       data => {
         console.log(this.userId);
         this.ads = data.clientes.sort((a, b) => new Date(b.fechaCreacion).getTime() - new Date(a.fechaCreacion).getTime());
-        this.ads  = this.ads.filter(ad => ad.correoAnunciante === this.userId || ad.correoTrabajador === this.userId);
+        //this.ads  = this.ads.filter(ad => ad.correoAnunciante === this.userId || ad.correoTrabajador === this.userId || ad.para === this.userId);
+        this.ads  = this.ads.filter(ad => ad.para === this.userId);
         console.log('noti ',this.ads);
       },
       error => {
@@ -115,6 +118,36 @@ export class NotificationPage implements OnInit {
       
     });
 
+    this.http.get(`${this.baseUrl}/anuncios/obtenerAnunciosPorIdAnuncioPrincipal/${ad._idAnuncio}`).subscribe(
+      response => {
+        this.adsString = JSON.stringify(response);
+        const miObjetoParseado = JSON.parse(this.adsString);
+        //const objPostulantesRechazados =[]
+        console.log("obj",miObjetoParseado);
+        console.log("length",miObjetoParseado.anuncios.length);
+        // Acceder a la propiedad
+        for (let i = 0; i < miObjetoParseado.anuncios.length; i++) {
+          if (miObjetoParseado.anuncios[i].postulante !== ad.correoTrabajador) {
+          //objPostulantesRechazados.push(miObjetoParseado.anuncios[i].postulante)
+          //console.log("fooooooooor",miObjetoParseado.anuncios[i].postulante);
+          ad.para = miObjetoParseado.anuncios[i].postulante;
+          ad.tipo='Rechazado'
+          this.http.post(`${this.baseUrl}/notificaciones/crearNotificacion`, ad).subscribe(response => {
+            console.log(response,'fin');
+            this.router.navigateByUrl('/feed'); 
+            
+          });
+          }
+        }
+        
+        //console.log("listooooo", objPostulantesRechazados);
+        
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    
     this.eliminarAnuncio(ad)
 
    

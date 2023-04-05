@@ -14,6 +14,7 @@ interface Anuncio {
   precioAnunciante: number;
   precioTrabajador: number;
   lugarAnunciante: string;
+  correoAnunciante:string;
   lugarTrabajador: string;
   transporte: string;
   tiempoAnunciante: string;
@@ -32,6 +33,7 @@ interface ApiResponse {
     descripcion: string;
     precioAnunciante: number;
     lugarAnunciante: string;
+    correoAnunciante:string;
     transporte: string;
     tiempoAnunciante: string;
     tipoPago: string;
@@ -56,14 +58,19 @@ export class MisPublicacionesPage implements OnInit {
   anuncioId: string = '';
   ads: any[] = [];
   items : any[] = [];
+  envio: any[] = [];
+
   currentAd: Anuncio | undefined;
   isModalOpen = false;
+  adsString: string = '';
+
 
   constructor(private activatedRoute: ActivatedRoute,private formBuilder: FormBuilder, private router: Router,private http: HttpClient) {
     this.AdForm = this.formBuilder.group({
       titulo: ['', Validators.required],
       descripcion: ['', Validators.required],
       precioAnunciante: [0, Validators.required],
+      correoAnunciante: [''],
       precioTrabajador: [0, Validators.required],
       lugarAnunciante: ['', Validators.required],
       lugarTrabajador: ['', Validators.required],
@@ -138,11 +145,23 @@ export class MisPublicacionesPage implements OnInit {
   }
   eliminateAd(id: any){
     if (confirm('¿Estás seguro de que quieres eliminar este anuncio?'+id)) {
-      this.http.delete(`${this.baseUrl}/anuncios/eliminarAnuncio/${id}`).subscribe(
+        this.http.delete(`${this.baseUrl}/anuncios/eliminarAnuncios/${id}`).subscribe(
         response => {
-          console.log(response);
-          // Actualizar la lista de anuncios después de la eliminación
-          this.getAds();
+          this.adsString = JSON.stringify(response);
+          const miObjetoParseado = JSON.parse(this.adsString);
+          console.log("obj",miObjetoParseado);
+          console.log("length",miObjetoParseado.anuncios.length);
+          // Acceder a la propiedad
+          for (let i = 0; i < miObjetoParseado.anuncios.length; i++) {
+            if (miObjetoParseado.anuncios[i].postulante !== this.userId) {
+            miObjetoParseado.anuncios[i].para = miObjetoParseado.anuncios[i].postulante;
+            miObjetoParseado.anuncios[i].tipo='AnuncioEliminado'
+            this.http.post(`${this.baseUrl}/notificaciones/crearNotificacion`, miObjetoParseado.anuncios[i]).subscribe(response => {
+              console.log(response,'notificacion eliminsado');
+              
+            });
+            }
+          }
         },
         error => {
           console.log(error);
@@ -151,6 +170,7 @@ export class MisPublicacionesPage implements OnInit {
     }
   }
   
+
   setOpen(isOpen: boolean,ad: Anuncio) {
     console.log("ver1 ",ad);
     
@@ -172,4 +192,7 @@ export class MisPublicacionesPage implements OnInit {
     this.router.navigateByUrl('/estado-anuncio', navigationExtras);
   }
 
+  eliminarAnuncio(ad:any) {
+    
+  }
 }

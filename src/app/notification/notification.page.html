@@ -32,7 +32,49 @@
         </ion-button>
       </ion-card-content>
     </ng-container>
+
+    <ng-container *ngIf="ad.tipo === 'Rechazado' && ad.para === userId">
+      <!-- Card para RechazoTrabajador -->
+      <ion-card-header>
+        <ion-card-title>Rechazado {{ ad.titulo }}</ion-card-title>
+      </ion-card-header>
   
+      <ion-card-content>
+        <p>Han contratado a alguien mas, no te desanimes sigue buscando mas trabajos similares, animo!</p>
+        <ion-button color="danger" (click)="eliminateAd(ad)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </ng-container>
+  
+    <ng-container *ngIf="ad.tipo === 'AnuncioEliminado' && ad.para === userId">
+      <!-- Card para RechazoTrabajador -->
+      <ion-card-header>
+        <ion-card-title>eliminado {{ ad.titulo }}</ion-card-title>
+      </ion-card-header>
+  
+      <ion-card-content>
+        <p>Han contratado a alguien mas, no te desanimes sigue buscando mas trabajos similares, animo!</p>
+        <ion-button color="danger" (click)="eliminateAd(ad)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </ng-container>
+
+    <ng-container *ngIf="ad.tipo === 'RenunciaDelTrabajador' && ad.para === userId">
+      <!-- Card para RechazoTrabajador -->
+      <ion-card-header>
+        <ion-card-title>Renuncia del Trabajador {{ ad.titulo }}</ion-card-title>
+      </ion-card-header>
+  
+      <ion-card-content>
+        <p>Han contratado a alguien mas, no te desanimes sigue buscando mas trabajos similares, animo!</p>
+        <ion-button color="danger" (click)="eliminateAd(ad)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </ng-container>
+
     <ng-container *ngIf="ad.tipo === 'Postulante' && ad.para === userId && ad.estado !== '1'">
       <!-- Card para aceptacionTrabajo -->
       <ion-card-header>
@@ -73,6 +115,8 @@
         </ion-button>
       </ion-card-content>
     </ng-container>
+
+    
 
   </ion-card>
   
