@@ -106,8 +106,11 @@
         </ion-button>
 
 
-        <ion-button *ngIf="ad.postulante === userId" slot="end" class="enviado-button">
+        <ion-button *ngIf="ad.postulante === userId && ad.estado == '0'" slot="end" class="enviado-button">
           Enviado
+        </ion-button>
+        <ion-button *ngIf="ad.postulante === userId && ad.estado == '1'" slot="end" class="enviado-aprobado" (click)="goToMisTrabajos()">
+          Aprobado
         </ion-button>
           
     </ion-card-content>

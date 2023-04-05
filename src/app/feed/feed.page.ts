@@ -118,11 +118,13 @@ export class FeedPage implements OnInit {
       data => {
         this.ads = data.clientes.sort((a, b) => new Date(b.fechaCreacion).getTime() - new Date(a.fechaCreacion).getTime());
         this.enEspera  = this.ads.filter(ad => ad.idAnuncioPrincipal && ad.postulante === this.userId);
+        console.log("ads ",this.ads);
+        
         if(this.enEspera.length>0){        
           //this.enEspera.forEach(res => {
-          this.ads  = this.ads.filter(ad => ad.postulante === '' && ad.estado === '0' || ad.postulante === this.userId);
+          this.ads  = this.ads.filter(ad => (ad.postulante === '' && ad.estado === '0') || ad.postulante === this.userId);
           this.ads = this.ads.filter(ad =>  ad._id !== ad.idAnuncioPrincipal);
-          console.log('feed',this.ads);
+          console.log('feed arriba',this.ads.concat(this.enEspera));
           
           // this.ads.forEach(res => {
           //   res.tiempoAnunciante= res.tiempoAnunciante.slice(11, 16);
@@ -130,7 +132,7 @@ export class FeedPage implements OnInit {
         //});
         }else{
           this.ads  = this.ads.filter(ad => ad.postulante === '' && ad.estado === '0' );
-          console.log('feed',this.ads);
+          console.log('feed abajo',this.ads);
         }
        
       },

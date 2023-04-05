@@ -8,13 +8,15 @@
 
 .aplicar-button {
     --ion-color-primary: #5b2bc2;// #F9D73B; // Define el color morado que deseas
-
   }
+
 .enviado-button {
     --ion-color-primary: #C71071;// #F9D73B; // Define el color morado que deseas
-
   }
 
+.enviado-aprobado {
+    --ion-color-primary: #10c765;// #F9D73B; // Define el color morado que deseas
+  }
 .my-card {
     background-color: #e6e6e6e6; // Fondo blanco
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.471); // Sombra

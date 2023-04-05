@@ -115,6 +115,8 @@ export class NotificationPage implements OnInit {
       
     });
 
+    this.eliminarAnuncio(ad)
+
    
   
    
@@ -154,4 +156,22 @@ export class NotificationPage implements OnInit {
   closeModal() {
     this.modalController.dismiss();
   }
+
+  eliminarAnuncio(ad:any) {
+    const id = ad._idAnuncio;
+    console.log(ad._idAnuncio);
+    
+    const correoTrabajador = ad.correoTrabajador;
+    this.http.delete(`${this.baseUrl}/anuncios/eliminarAnunciosHijos/${id}/${correoTrabajador}`).subscribe(
+      response => {
+        console.log(response);
+        // Actualizar la lista de anuncios después de la eliminación
+        //this.getAds();
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+  
 }

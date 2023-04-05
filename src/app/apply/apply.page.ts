@@ -154,7 +154,8 @@ export class ApplyPage implements OnInit {
     
 
 
-    //data.estado='1'
+    data.idAnuncioPrincipal = '';
+
     data.postulante=""
     //cambio estado al anuncio ya que hay un postulado
     this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${this.ad._id}`, data).subscribe(response => {
