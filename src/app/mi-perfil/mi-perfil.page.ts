@@ -100,6 +100,6 @@ export class MiPerfilPage implements OnInit {
     this.http.put(`${this.baseUrl}/clientes/actualizarCliente/${data.id}`, data).subscribe(response => {
       console.log(response);
     });
-    this.router.navigate(['/mi-perfil']);
+    this.router.navigate(['/feed']);
   }
 }

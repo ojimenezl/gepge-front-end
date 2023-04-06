@@ -44,25 +44,25 @@
     <ion-item>
       <ion-label position="floating">Fecha Nacimiento</ion-label>
       <ion-grid>
-        <ion-row>
-          <ion-col size="4">
+        <ion-row align-items="stretch">
+          <ion-item>
             <ion-select formControlName="dia" placeholder="Día">
               <ion-select-option *ngFor="let dia of dias" [value]="dia">{{dia}}</ion-select-option>
             </ion-select>
-          </ion-col>
-          <ion-col size="4">
+          </ion-item>
+          <ion-item>
             <ion-select formControlName="mes" placeholder="Mes">
               <ion-select-option *ngFor="let mes of meses" [value]="mes">{{mes}}</ion-select-option>
             </ion-select>
-          </ion-col>
-          <ion-col size="4">
+          </ion-item>
+          <ion-item>
             <ion-select formControlName="year" placeholder="Año">
               <ion-select-option *ngFor="let anio of year" [value]="anio">{{anio}}</ion-select-option>
             </ion-select>
-          </ion-col>
+          </ion-item>
         </ion-row>
-        
       </ion-grid>
+      
     </ion-item>
     
     

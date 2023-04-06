@@ -24,21 +24,31 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Lugar</ion-label>
+      Cambiar el lugar: 
+      <ion-item slot="end">{{ ad.lugarAnunciante}}
+        <ion-toggle [(ngModel)]="mostrarLugar" [ngModelOptions]="{standalone: true}"></ion-toggle>
+      </ion-item>
     </ion-item>
-    <ion-item>
+    
+    <ion-item *ngIf="mostrarLugar">
+      <ion-label>Nuevo Lugar</ion-label>
+    </ion-item>
+    <ion-item *ngIf="mostrarLugar">
       <ion-searchbar class="serch-map" formControlName="lugarAnunciante" [(ngModel)]="autocomplete.input" (ionInput)="UpdateSearchResults()" placeholder="Search for a place" (ionClear)="ClearAutocomplete()"></ion-searchbar>
     </ion-item>
     
+    
     <ion-list class="serch-map" *ngIf="showResults && autocompleteItems.length > 0">
-      <ion-item class="serch-map" *ngFor="let item of autocompleteItems" tappable (click)="SelectSearchResult(item)">
+      <ion-item class="serch-map" *ngFor="let item of autocompleteItems" tappable (click)="SelectSearchResult(item)" value="quito">
         {{ item.description }}
       </ion-item>
     </ion-list>
 
     <ion-item>
       <ion-label>¿Necesita taxi?</ion-label>
+    <ion-item slot="end">
       <ion-toggle formControlName="transporte"></ion-toggle>
+    </ion-item>
     </ion-item>
 
     <ion-item>

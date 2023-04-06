@@ -74,17 +74,23 @@ export class ApplyPage implements OnInit {
   precioTrabajador: boolean = true;
   GoogleAutocomplete: any;
   showResults = true;
+  mostrarPrecio: boolean = true;
+  mostrarHora: boolean = true;
+  //tiempoTrabajador={ tiempoTrabajador: '10:00' };
   constructor(private geolocation: Geolocation,private nativeGeocoder: NativeGeocoder,public zone: NgZone,private activatedRoute: ActivatedRoute,private formBuilder: FormBuilder, private router: Router,private http: HttpClient) {
+    this.ad = this.router.getCurrentNavigation()?.extras?.state?.['ad'];
+    //console.log("arriba ",this.ad.tiempoTrabajador);
+    
     this.AdForm = this.formBuilder.group({
       titulo: ['', Validators.required],
       descripcion: ['', Validators.required],
       precioAnunciante: [0, Validators.required],
-      precioTrabajador: [0, Validators.required],
+      precioTrabajador: [this.ad.precioAnunciante, Validators.required],
       lugarAnunciante: ['', Validators.required],
       lugarTrabajador: ['', Validators.required],
       precioTransporte: [''],
       tiempoAnunciante: ['', Validators.required],
-      tiempoTrabajador: ['', Validators.required],
+      tiempoTrabajador: [this.ad.tiempoAnunciante, Validators.required],
       tipoPago: ['', Validators.required],
       creador: [''],
       nombreTrabajador: [''],
@@ -112,7 +118,8 @@ export class ApplyPage implements OnInit {
           lugarAnunciante: this.ad.lugarAnunciante,
           transporte: this.ad.transporte,
           tiempoAnunciante: this.ad.tiempoAnunciante,
-          tipoPago: this.ad.tipoPago
+          tipoPago: this.ad.tipoPago,
+          //tiempoTrabajador:this.ad.tiempoTrabajador
           //nombreTrabajador:this.nombreTrabajador
         });
       }
@@ -120,10 +127,9 @@ export class ApplyPage implements OnInit {
   }
 
   addAd() {
-    console.log('aqui');
     
     const data = this.AdForm.value;
-    
+    console.log('aqui ',data);
 
     
     //mi anuncio al que postule
