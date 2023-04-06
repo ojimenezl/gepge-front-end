@@ -131,7 +131,8 @@ ionViewDidEnter() {
 
     const navigationExtras: NavigationExtras = {
       state: {
-        anuncioId: this.idAnuncioPrincipal
+        anuncioId: this.idAnuncioPrincipal,
+        tipoPago:this.ad.tipoPago
       }
     };
     this.router.navigateByUrl('/terminado', navigationExtras);

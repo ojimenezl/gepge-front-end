@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router,NavigationExtras } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { GoogleLoginProvider, SocialAuthService, SocialUser, SocialAuthServiceConfig } from 'angularx-social-login';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
@@ -60,19 +60,23 @@ export class LoginPage implements OnInit {
       console.log('para envio UserId',data.email,'<--');
      
         this.http.get(`${this.baseUrl}/anuncios/obtenerAnuncioPorCorreo?correo=${data.email}`)
-          .subscribe(response => {
-            
+          .subscribe(response => {            
             this.ads = JSON.stringify(response);
             const miObjetoParseado = JSON.parse(this.ads);
             const miPropiedad = miObjetoParseado;
             console.log(miPropiedad.encontrado);
+            localStorage.setItem('accesoPagoEntreUsuarios', miPropiedad.encontrado.toString());
+            if(miPropiedad.encontrado){
+            this.router.navigate(['/feed']);
+            }else{
+              this.router.navigateByUrl('/acceso');
+            }
             
             
           });
       
 
       
-      this.router.navigate(['/feed']);
 
 
 

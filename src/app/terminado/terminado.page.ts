@@ -37,6 +37,8 @@ export class TerminadoPage implements OnInit {
   codigoObj: any[] = [];
   codigo: string = '';
   ads: string = '';
+  tipoPago: string = '';
+
   AdForm: FormGroup;
   constructor(private formBuilder: FormBuilder,private activatedRoute: ActivatedRoute, private router: Router,private modalController: ModalController,private http: HttpClient) {
     this.AdForm = this.formBuilder.group({
@@ -46,8 +48,8 @@ export class TerminadoPage implements OnInit {
       // digit3:['', Validators.required],
       // digit4:['', Validators.required],
       // digit5:['', Validators.required],
-      trabajoCompleto: [false],
-      trabajoATiempo: [false],
+      trabajoCompleto: [true],
+      trabajoATiempo: [true],
       tipoPago: ['', Validators.required],
       creador: [''],
       postulante: [''],
@@ -59,6 +61,11 @@ export class TerminadoPage implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation()?.extras?.state?.['anuncioId']) {
         this.anuncioId = this.router.getCurrentNavigation()?.extras?.state?.['anuncioId']; // obtener el ID del anuncio
+        this.tipoPago = this.router.getCurrentNavigation()?.extras?.state?.['tipoPago']; // obtener el ID del anuncio
+        
+        if (this.AdForm) {
+          this.AdForm.get('tipoPago')?.setValue(this.tipoPago);
+        }
         console.log("id trabajador",this.anuncioId);
             
         this.http.get<ApiResponse>(`${this.baseUrl}/anuncios/obtenerAnuncio/${this.anuncioId}`).subscribe(

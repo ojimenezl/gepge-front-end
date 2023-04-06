@@ -67,6 +67,8 @@ export class MensajesPopPage implements OnInit {
   validarCodigo: string = '';
   ingresoCodigo: string = '';
   codigoCorrecto: boolean = false;
+  adsString: string = '';
+
   private isPageLoaded: boolean = false;
   AdForm: FormGroup;
   @ViewChild(IonContent, { static: true }) content!: IonContent;
@@ -86,12 +88,16 @@ export class MensajesPopPage implements OnInit {
   }
 
   ngOnInit() {
+    //agregar la condicion para el mensaje
     if (this.mensaje == 'Terminado') {
       this.Terminado = true;
     }
     if (this.mensaje == 'Recibido') {
       this.Recibido = true;
     }
+
+   
+
   }
   addAd() {
     // const data = this.AdForm.value;
@@ -128,11 +134,23 @@ export class MensajesPopPage implements OnInit {
              // EntregacodigoTrabajador:'entregado',
               EntregacodigoAnunciante:'entregado'
             }
+
             this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${this.anuncioId}`, dataRestrigncion).subscribe(response => {
-              console.log(response);
-              //this.router.navigateByUrl('/feed');
-              
+              console.log(response);       
             });
+            this.http.get(`${this.baseUrl}/anuncios/obtenerAnunciosPorIdAnuncioPrincipal/${this.anuncioId}`).subscribe(
+              response => {
+                console.log("anuncio hijo ",response);
+                this.adsString  = JSON.stringify(response);
+                const miObjetoParseado = JSON.parse(this.adsString);
+                const miPropiedad = miObjetoParseado;
+                console.log("id hijo ",miPropiedad.anuncios[0]._id);
+                
+                this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${miPropiedad.anuncios[0]._id}`, dataRestrigncion).subscribe(response => {
+                  console.log(response);              
+                });
+                
+              })
             this.codigoCorrecto = true
           }else{
             this.codigoCorrecto=false
@@ -147,5 +165,8 @@ export class MensajesPopPage implements OnInit {
   }
   scrollToBottom() {
     this.content.scrollToBottom(500);
+  }
+  goToMisPublicaciones() {
+    this.navCtrl.navigateForward('/mis-publicaciones');
   }
 }

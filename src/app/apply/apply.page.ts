@@ -70,6 +70,8 @@ export class ApplyPage implements OnInit {
   autocompleteItems: any[];
   location: any;
   placeid: any;
+  estaDeAcuerdo = true;
+  precioTrabajador: boolean = true;
   GoogleAutocomplete: any;
   showResults = true;
   constructor(private geolocation: Geolocation,private nativeGeocoder: NativeGeocoder,public zone: NgZone,private activatedRoute: ActivatedRoute,private formBuilder: FormBuilder, private router: Router,private http: HttpClient) {
@@ -165,6 +167,15 @@ export class ApplyPage implements OnInit {
     this.router.navigateByUrl('/feed');
     
   }
+
+  // togglePrecio() {
+  //   this.estaDeAcuerdo = !this.estaDeAcuerdo;
+  //   if (this.estaDeAcuerdo) {
+  //     this.AdForm.get('precioTrabajador')?.disable();// Desactivamos el control de precioTrabajador
+  //   } else {
+  //     this.AdForm.get('precioTrabajador')?.enable(); // Activamos el control de precioTrabajador
+  //   }
+  // }
   //AUTOCOMPLETE, SIMPLEMENTE ACTUALIZAMOS LA LISTA CON CADA EVENTO DE ION CHANGE EN LA VISTA.
   UpdateSearchResults() {
     if (this.autocomplete.input == '') {

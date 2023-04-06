@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ItemReorderEventDetail } from '@ionic/angular';
+import { ModalController} from '@ionic/angular';
 import { NavigationExtras } from '@angular/router';
 import { environment } from '../../environments/environment';
 
@@ -65,7 +66,7 @@ export class MisPublicacionesPage implements OnInit {
   adsString: string = '';
 
 
-  constructor(private activatedRoute: ActivatedRoute,private formBuilder: FormBuilder, private router: Router,private http: HttpClient) {
+  constructor(private modalController: ModalController,private activatedRoute: ActivatedRoute,private formBuilder: FormBuilder, private router: Router,private http: HttpClient) {
     this.AdForm = this.formBuilder.group({
       titulo: ['', Validators.required],
       descripcion: ['', Validators.required],
@@ -101,6 +102,9 @@ export class MisPublicacionesPage implements OnInit {
         });
       }
     });
+  }
+  ngOnDestroy() {
+    this.modalController.dismiss();
   }
   ionViewWillEnter(){
     this.getAds();

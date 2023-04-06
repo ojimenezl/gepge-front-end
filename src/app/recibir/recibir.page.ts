@@ -40,10 +40,14 @@ export class RecibirPage implements OnInit {
   validarCodigo: string = '';
   ingresoCodigo: string = '';
   codigoCorrecto: boolean = false;
+  adsString: string = '';
+  tipoPago: string = '';
+
 
   AdForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,private activatedRoute: ActivatedRoute, private router: Router,private modalController: ModalController,private http: HttpClient) {
+    
     this.AdForm = this.formBuilder.group({
 
       digit1:['', Validators.required],
@@ -51,8 +55,8 @@ export class RecibirPage implements OnInit {
       digit3:['', Validators.required],
       digit4:['', Validators.required],
       digit5:['', Validators.required],
-      trabajoCompleto: [false],
-      trabajoATiempo: [false],
+      trabajoCompleto: [true],
+      trabajoATiempo: [true],
       tipoPago: ['', Validators.required],
       creador: [''],
       postulante: [''],
@@ -64,7 +68,13 @@ export class RecibirPage implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation()?.extras?.state?.['anuncioId']) {
         this.anuncioId = this.router.getCurrentNavigation()?.extras?.state?.['anuncioId']; // obtener el ID del anuncio
-        console.log("idd anunciante",this.anuncioId);
+        this.tipoPago = this.router.getCurrentNavigation()?.extras?.state?.['tipoPago']; // obtener el ID del anuncio
+        
+        if (this.AdForm) {
+          this.AdForm.get('tipoPago')?.setValue(this.tipoPago);
+        }
+
+        console.log("idd anunciante",this.tipoPago);
         
         this.http.get<ApiResponse>(`${this.baseUrl}/anuncios/obtenerAnuncio/${this.anuncioId}`).subscribe(
           data => {
@@ -123,7 +133,7 @@ export class RecibirPage implements OnInit {
         const miPropiedad = miObjetoParseado;
         if (miPropiedad.hasOwnProperty('codigoTrabajador')) {
           this.codigo=miPropiedad.codigoTrabajador   
-          console.log(this.ingresoCodigo, " == ", this.codigo.toString());
+          console.log("propiedad",miPropiedad);
 
           if(this.ingresoCodigo == this.codigo.toString()){
             const dataRestrigncion ={
@@ -131,10 +141,21 @@ export class RecibirPage implements OnInit {
               EntregacodigoAnunciante:'noEntregado'
             }
             this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${this.anuncioId}`, dataRestrigncion).subscribe(response => {
-              console.log(response);
-              //this.router.navigateByUrl('/feed');
-              
+              console.log(response);              
             });
+            this.http.get(`${this.baseUrl}/anuncios/obtenerAnunciosPorIdAnuncioPrincipal/${this.anuncioId}`).subscribe(
+              response => {
+                console.log("anuncio hijo ",response);
+                this.adsString  = JSON.stringify(response);
+                const miObjetoParseado = JSON.parse(this.adsString);
+                const miPropiedad = miObjetoParseado;
+                console.log("id hijo ",miPropiedad.anuncios[0]._id);
+                
+                this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${miPropiedad.anuncios[0]._id}`, dataRestrigncion).subscribe(response => {
+                  console.log(response);              
+                });
+                
+              })
             this.codigoCorrecto=true
           }else{
             this.codigoCorrecto=false

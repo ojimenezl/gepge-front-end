@@ -9,7 +9,10 @@
 <ion-content class="ion-padding">
   <form [formGroup]="AdForm" (ngSubmit)="addAd()">
     <ion-item>
-      <ion-label>Anunciante:{{ ad.nombreAnunciante }}</ion-label>
+      <ion-label>Anunciante : {{ ad.nombreAnunciante }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>REQUERIMIENTO</ion-label>
     </ion-item>
     <ion-card>
       <ion-card-header>
@@ -39,7 +42,7 @@
 
 
     <ion-item>
-      <ion-label>Trabajador {{nombreTrabajador}}</ion-label>
+      <ion-label>Trabajador: {{nombreTrabajador}}</ion-label>
     </ion-item>
 
     <ion-item>
@@ -47,10 +50,13 @@
       <ion-input *ngIf="ad.transporte === 'true'" formControlName="precioTransporte"></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Si no estas deacuerdo con el precio puedes anadir el precio del servicio:</ion-label>
-      <ion-input type="number" step="0.01" formControlName="precioTrabajador"></ion-input>
-    </ion-item>
+    <ion-toggle [(ngModel)]="estaDeAcuerdo" [ngModelOptions]="{standalone: true}" ></ion-toggle>
+
+  <ion-item>
+    <ion-label position="floating">Si no estas deacuerdo con el precio puedes anadir el precio del servicio:</ion-label>
+    <ion-input type="number" step="0.01" formControlName="precioTrabajador" [disabled]="precioTrabajador"></ion-input>
+  </ion-item>
+    
 
     <ion-item>
       <ion-label>Lugar</ion-label>

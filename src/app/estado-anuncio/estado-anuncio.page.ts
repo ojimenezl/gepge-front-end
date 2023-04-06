@@ -92,10 +92,11 @@ ionViewDidEnter() {
     });
   }
   goToRecibir(){
-    console.log(this.anuncioId);
+    console.log("envio recibir ",this.ad.tipoPago);
     const navigationExtras: NavigationExtras = {
       state: {
-        anuncioId: this.anuncioId
+        anuncioId: this.anuncioId,
+        tipoPago:this.ad.tipoPago
       }
     };
     

@@ -91,6 +91,10 @@ const routes: Routes = [
     path: 'front-all',
     loadChildren: () => import('./front-all/front-all.module').then( m => m.FrontAllPageModule)
   },
+  {
+    path: 'acceso',
+    loadChildren: () => import('./acceso/acceso.module').then( m => m.AccesoPageModule)
+  },
   
   
 ];
