@@ -62,6 +62,6 @@
     
 
     <ion-button type="submit" expand="block" [disabled]="!AdForm.valid" (click)="validar()" color="tertiary">Validar</ion-button>
-    <ion-button type="submit" expand="block" [disabled]="!AdForm.valid" (click)="presentModal()" color="tertiary">Siguiente</ion-button>
+    <ion-button type="submit" expand="block" [disabled]="!AdForm.valid" (click)="presentModal()" color="tertiary" *ngIf="codigoCorrecto">Siguiente</ion-button>
   </form>
 </ion-content>

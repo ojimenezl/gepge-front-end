@@ -124,6 +124,15 @@ export class MensajesPopPage implements OnInit {
           console.log(this.ingresoCodigo, " == ", this.codigo.toString());
 
           if (this.ingresoCodigo == this.codigo.toString()) {
+            const dataRestrigncion ={
+             // EntregacodigoTrabajador:'entregado',
+              EntregacodigoAnunciante:'entregado'
+            }
+            this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${this.anuncioId}`, dataRestrigncion).subscribe(response => {
+              console.log(response);
+              //this.router.navigateByUrl('/feed');
+              
+            });
             this.codigoCorrecto = true
           }else{
             this.codigoCorrecto=false

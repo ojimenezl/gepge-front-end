@@ -17,6 +17,7 @@ export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
   socialUser: SocialUser = {} as SocialUser;
+  ads: string = '';
 
 
   constructor(
@@ -57,8 +58,23 @@ export class LoginPage implements OnInit {
       console.log(data.email);
       localStorage.setItem('userId', data.email);
       console.log('para envio UserId',data.email,'<--');
+     
+        this.http.get(`${this.baseUrl}/anuncios/obtenerAnuncioPorCorreo?correo=${data.email}`)
+          .subscribe(response => {
+            
+            this.ads = JSON.stringify(response);
+            const miObjetoParseado = JSON.parse(this.ads);
+            const miPropiedad = miObjetoParseado;
+            console.log(miPropiedad.encontrado);
+            
+            
+          });
+      
+
       
       this.router.navigate(['/feed']);
+
+
 
     });
     

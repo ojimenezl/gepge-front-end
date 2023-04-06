@@ -126,6 +126,15 @@ export class RecibirPage implements OnInit {
           console.log(this.ingresoCodigo, " == ", this.codigo.toString());
 
           if(this.ingresoCodigo == this.codigo.toString()){
+            const dataRestrigncion ={
+              EntregacodigoTrabajador:'entregado',
+              EntregacodigoAnunciante:'noEntregado'
+            }
+            this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${this.anuncioId}`, dataRestrigncion).subscribe(response => {
+              console.log(response);
+              //this.router.navigateByUrl('/feed');
+              
+            });
             this.codigoCorrecto=true
           }else{
             this.codigoCorrecto=false
@@ -135,6 +144,7 @@ export class RecibirPage implements OnInit {
         }
     });
   }
+
   async presentModal() {
     const modal = await this.modalController.create({
       component: MensajesPopPage,

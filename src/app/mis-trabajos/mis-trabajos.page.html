@@ -10,11 +10,15 @@
 
     <ion-list class="ion-padding">
       <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))" >
-        <ion-item *ngFor="let ad of ads" [color]="ad.estado === '0' ? 'primary' : 'tertiary'">
+          <ion-item *ngFor="let ad of ads" [color]="ad.estado === '0' ? 'primary' : ad.EntregacodigoAnunciante === 'entregado' ? 'success' : ad.EntregacodigoAnunciante === 'enEspera' ? 'warning' : ad.EntregacodigoAnunciante === 'noEntregado' ? 'danger' : 'tertiary'">
+
           <p class="icon-card">
             - {{ ad.titulo }}{{ ad.estado }}
           </p>
           <ion-buttons slot="end">
+            <ion-button *ngIf="ad.EntregacodigoAnunciante === 'noEntregado'" class="edit-button" slot="end">
+              Pendiente de pago {{ currentAd?.estado }}<ion-icon name="pencil">Ver Estado</ion-icon>
+           </ion-button>
             <ion-button *ngIf="ad.estado === '1'" class="edit-button" slot="end" (click)="goToEstadoTrabajador(ad)">
               Aprobado {{ currentAd?.estado }}<ion-icon name="pencil">Ver Estado</ion-icon>
             </ion-button>

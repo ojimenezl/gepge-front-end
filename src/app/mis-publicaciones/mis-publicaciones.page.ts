@@ -155,6 +155,8 @@ export class MisPublicacionesPage implements OnInit {
           for (let i = 0; i < miObjetoParseado.anuncios.length; i++) {
             if (miObjetoParseado.anuncios[i].postulante !== this.userId) {
             miObjetoParseado.anuncios[i].para = miObjetoParseado.anuncios[i].postulante;
+            delete miObjetoParseado.anuncios[i].fechaCreacion;
+
             miObjetoParseado.anuncios[i].tipo='AnuncioEliminado'
             this.http.post(`${this.baseUrl}/notificaciones/crearNotificacion`, miObjetoParseado.anuncios[i]).subscribe(response => {
               console.log(response,'notificacion eliminsado');

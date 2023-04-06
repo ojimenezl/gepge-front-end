@@ -149,17 +149,18 @@ export class MisTrabajosPage implements OnInit {
           const miObjetoParseado = JSON.parse(this.adsString);
           console.log("obj",miObjetoParseado.anuncios.correoAnunciante);
           console.log("length",miObjetoParseado.anuncios.length);
-          // Acceder a la propiedad
-        //  for (let i = 0; i < miObjetoParseado.anuncios.length; i++) {
-           // if (miObjetoParseado.anuncios[0].postulante !== this.userId) {
+         
             miObjetoParseado.anuncios.para = miObjetoParseado.anuncios.correoAnunciante;
+            delete miObjetoParseado.anuncios.fechaCreacion;
             miObjetoParseado.anuncios.tipo='RenunciaDelTrabajador'
             this.http.post(`${this.baseUrl}/notificaciones/crearNotificacion`, miObjetoParseado.anuncios).subscribe(response => {
               console.log(response,'notificacion eliminsado');
               
             });
-            miObjetoParseado.anuncios.estado='0'
-            this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${miObjetoParseado.anuncios.idAnuncioPrincipal}`, miObjetoParseado).subscribe(response => {
+            const ad={
+              estado: "0"
+            }
+            this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${miObjetoParseado.anuncios.idAnuncioPrincipal}`, ad).subscribe(response => {
               console.log(response);
               
               });

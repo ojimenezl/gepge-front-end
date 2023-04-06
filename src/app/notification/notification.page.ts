@@ -44,6 +44,8 @@ interface CreateNotificacion {
   estado: string;
   _idAnuncio:string;
   _idAnuncioHijo: string;
+  EntregacodigoAnunciante:string;
+  EntregacodigoTrabajador:string;
 }
 
 @Component({
@@ -94,6 +96,8 @@ export class NotificationPage implements OnInit {
     ad.para = ad.correoTrabajador 
     console.log('data notofocatons',ad._idAnuncio,ad._id);
     ad.estado='1'
+    ad.EntregacodigoAnunciante='enEspera'
+    ad.EntregacodigoTrabajador='enEspera'
     const id= ad._id
     delete ad._id;
     this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${ad._idAnuncio}`, ad).subscribe(response => {
@@ -122,16 +126,13 @@ export class NotificationPage implements OnInit {
       response => {
         this.adsString = JSON.stringify(response);
         const miObjetoParseado = JSON.parse(this.adsString);
-        //const objPostulantesRechazados =[]
         console.log("obj",miObjetoParseado);
         console.log("length",miObjetoParseado.anuncios.length);
         // Acceder a la propiedad
         for (let i = 0; i < miObjetoParseado.anuncios.length; i++) {
           if (miObjetoParseado.anuncios[i].postulante !== ad.correoTrabajador) {
-          //objPostulantesRechazados.push(miObjetoParseado.anuncios[i].postulante)
-          //console.log("fooooooooor",miObjetoParseado.anuncios[i].postulante);
           ad.para = miObjetoParseado.anuncios[i].postulante;
-          ad.tipo='Rechazado'
+          ad.tipo='noSeleccionado'
           this.http.post(`${this.baseUrl}/notificaciones/crearNotificacion`, ad).subscribe(response => {
             console.log(response,'fin');
             this.router.navigateByUrl('/feed'); 
@@ -171,6 +172,31 @@ export class NotificationPage implements OnInit {
         response => {
           console.log(response);
           // Actualizar la lista de anuncios después de la eliminación
+          this.getNotifications();
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+  rechazar(ad: Notificacion){
+    if (confirm('¿Estás seguro de que quieres rechazar al postulante?')) {
+      console.log("rechazado ",ad);
+      
+      this.http.delete(`${this.baseUrl}/notificaciones/eliminarNotificacion/${ad._id}`).subscribe(
+        response => {
+          console.log(response);
+          const noti= {
+            para: ad.correoTrabajador,
+            tipo:'Rechazado'
+          }
+          
+          this.http.post(`${this.baseUrl}/notificaciones/crearNotificacion`, noti).subscribe(response => {
+            console.log(response,'fin');
+            this.router.navigateByUrl('/feed'); 
+            
+          });
           this.getNotifications();
         },
         error => {

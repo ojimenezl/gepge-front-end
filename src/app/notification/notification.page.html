@@ -23,12 +23,28 @@
   
       <ion-card-content>
         <p>Felicidades, han aceptado tu postulacion, ahora puedes empezar a trabajar!</p>
-        <ion-button color="danger" (click)="eliminateAd(ad)">
-          <ion-icon name="trash"></ion-icon>
-        </ion-button>
+        
         <ion-button color="success" (click)="goToMisTrabajos()">
           <ion-icon name="checkmark"></ion-icon>
           Ver
+        </ion-button>
+
+        <ion-button color="danger" (click)="eliminateAd(ad)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </ng-container>
+
+    <ng-container *ngIf="ad.tipo === 'noSeleccionado' && ad.para === userId">
+      <!-- Card para RechazoTrabajador -->
+      <ion-card-header>
+        <ion-card-title>No Seleccionado {{ ad.titulo }}</ion-card-title>
+      </ion-card-header>
+  
+      <ion-card-content>
+        <p>Han contratado a alguien mas, no te desanimes sigue buscando mas trabajos similares, animo!</p>
+        <ion-button color="danger" (click)="eliminateAd(ad)">
+          <ion-icon name="trash"></ion-icon>
         </ion-button>
       </ion-card-content>
     </ng-container>
@@ -40,7 +56,7 @@
       </ion-card-header>
   
       <ion-card-content>
-        <p>Han contratado a alguien mas, no te desanimes sigue buscando mas trabajos similares, animo!</p>
+        <p>No desean tus servicios, no te desanimes sigue buscando mas trabajos similares, animo!</p>
         <ion-button color="danger" (click)="eliminateAd(ad)">
           <ion-icon name="trash"></ion-icon>
         </ion-button>
@@ -50,11 +66,11 @@
     <ng-container *ngIf="ad.tipo === 'AnuncioEliminado' && ad.para === userId">
       <!-- Card para RechazoTrabajador -->
       <ion-card-header>
-        <ion-card-title>eliminado {{ ad.titulo }}</ion-card-title>
+        <ion-card-title>Anuncio Eliminado {{ ad.titulo }}</ion-card-title>
       </ion-card-header>
   
       <ion-card-content>
-        <p>Han contratado a alguien mas, no te desanimes sigue buscando mas trabajos similares, animo!</p>
+        <p>El trabajo ha sido eliminado</p>
         <ion-button color="danger" (click)="eliminateAd(ad)">
           <ion-icon name="trash"></ion-icon>
         </ion-button>
@@ -68,7 +84,7 @@
       </ion-card-header>
   
       <ion-card-content>
-        <p>Han contratado a alguien mas, no te desanimes sigue buscando mas trabajos similares, animo!</p>
+        <p>El trabajador a renunciado al trabajo, el anuncio ha vuelto a publicarse, esperamos vuelvas a encontrar otro trabajador!</p>
         <ion-button color="danger" (click)="eliminateAd(ad)">
           <ion-icon name="trash"></ion-icon>
         </ion-button>
@@ -78,7 +94,7 @@
     <ng-container *ngIf="ad.tipo === 'Postulante' && ad.para === userId && ad.estado !== '1'">
       <!-- Card para aceptacionTrabajo -->
       <ion-card-header>
-        <ion-card-title>Postulantes {{ ad.titulo }}</ion-card-title>
+        <ion-card-title>Postulantes para {{ ad.titulo }}</ion-card-title>
         <ion-card-subtitle>{{ ad.nombreTrabajador }}</ion-card-subtitle>
         <ion-card-subtitle>{{ ad.lugarTrabajador }}</ion-card-subtitle>
       </ion-card-header>
@@ -86,38 +102,45 @@
       <ion-card-content>
         <p>{{ ad.descripcion }}</p>
         <p>Precio: {{ ad.precioTrabajador | currency:'USD':'symbol':'1.2-2' }}</p>
-        <ion-button color="danger" (click)="eliminateAd(ad)">
-          <ion-icon name="trash"></ion-icon>
-        </ion-button>
+        
         <ion-button color="success" (click)="aceptar(ad)">
           <ion-icon name="checkmark"></ion-icon>
           Aceptar
         </ion-button>
+
+        <ion-button color="danger" (click)="rechazar(ad)">
+          Rechazar <ion-icon name="trash"></ion-icon>
+        </ion-button>
+
       </ion-card-content>
     </ng-container>
 
     <ng-container *ngIf="ad.tipo === 'Postulante' && ad.para === userId && ad.estado === '1'">
       <!-- Card para aceptacionTrabajo -->
       <ion-card-header>
-        <ion-card-title>Postulantes {{ ad.titulo }}</ion-card-title>
+        <ion-card-title>Postulantes Aceptado para {{ ad.titulo }}</ion-card-title>
         <ion-card-subtitle>{{ ad.lugarTrabajador }}</ion-card-subtitle>
       </ion-card-header>
   
       <ion-card-content>
         <p>{{ ad.descripcion }}</p>
         <p>Precio: {{ ad.precioTrabajador | currency:'USD':'symbol':'1.2-2' }}</p>
-        <ion-button color="danger" (click)="eliminateAd(ad)">
-          <ion-icon name="trash"></ion-icon>
-        </ion-button>
+        
         <ion-button color="success" (click)="goToMisPublicaciones()">
           <ion-icon name="checkmark"></ion-icon>
           Ver
         </ion-button>
+
+        <ion-button color="danger" (click)="eliminateAd(ad)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+
       </ion-card-content>
     </ng-container>
 
     
 
+    
   </ion-card>
   
   
