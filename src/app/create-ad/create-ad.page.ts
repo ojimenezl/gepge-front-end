@@ -7,6 +7,23 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 
 declare var google: { maps: { places: { AutocompleteService: new () => any; }; }; };
+interface Cliente {
+  mensaje: string;
+  cliente: {
+    nombre: string;
+    email: string;
+    cedula: string;
+    celular: string;
+    ciudad: string;
+    fechaNacimiento: string;
+    //apellido: String,
+    //edad: Number,
+    password: string;
+    fechaCreacion: string;
+    __v: number;
+  }[];
+}
+
 @Component({
   selector: 'app-create-ad',
   templateUrl: './create-ad.page.html',
@@ -72,9 +89,17 @@ export class CreateAdPage implements OnInit {
     data.numeroAnunciante= localStorage.getItem('celular') || '';
     data.postulante = '';
     data.estado='0'
-    this.http.post(`${this.baseUrl}/anuncios/crearAnuncio`, data).subscribe(response => {
-      console.log(response);
-    });
+
+    this.http.get<Cliente>(`${this.baseUrl}/clientes/obtenerTokenCliente/${localStorage.getItem('userId')}`).subscribe(
+      token => {
+        console.log("token: ",token.cliente);
+        data.token=token.cliente
+        this.http.post(`${this.baseUrl}/anuncios/crearAnuncio`, data).subscribe(response => {
+          console.log(response);
+        });
+      })
+
+    
     this.router.navigateByUrl('/feed');
     
   }

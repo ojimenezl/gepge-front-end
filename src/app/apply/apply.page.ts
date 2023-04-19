@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { switchMap } from 'rxjs/operators';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -40,10 +40,26 @@ interface ApiResponse {
     tiempoAnunciante: string;
     tipoPago: string;
     fechaCreacion: string;
+    token:string;
     __v: number;
   }[];
 }
-
+interface Cliente {
+  mensaje: string;
+  cliente: {
+    nombre: string;
+    email: string;
+    cedula: string;
+    celular: string;
+    ciudad: string;
+    fechaNacimiento: string;
+    //apellido: String,
+    //edad: Number,
+    password: string;
+    fechaCreacion: string;
+    __v: number;
+  }[];
+}
 @Component({
   selector: 'app-apply',
   templateUrl: './apply.page.html',
@@ -51,6 +67,7 @@ interface ApiResponse {
 })
 export class ApplyPage implements OnInit {
   private baseUrl = environment.apiUrl;
+  private keyFCM =environment.keyFCM;
 
   ad: Anuncio;
   ads: any[] = [];
@@ -153,8 +170,33 @@ export class ApplyPage implements OnInit {
         data._idAnuncio = this.ad._id;
         data._idAnuncioHijo = localStorage.getItem('idAnuncioHijo') || '';
         console.log('envio notificaion al anunciante ', localStorage.getItem('idAnuncioHijo') || '');
-    
+        ///
+
+        this.http.get<Cliente>(`${this.baseUrl}/clientes/obtenerTokenCliente/${this.ad.creador}`).subscribe(
+          gettoken => {
+            console.log(gettoken.cliente);
+            
+        const token = gettoken.cliente;
+        const body = {
+          to: token,
+          notification: {
+            title: 'Nuevo Postulante',
+            body: this.nombreTrabajador+' ha postulado para el puesto '+this.ad.titulo+' que has publicado'
+          }
+        };
+        const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': this.keyFCM
+        });
+        this.http.post('https://fcm.googleapis.com/fcm/send', body, { headers }).subscribe(response => {
+          console.log('La notificación push fue enviada correctamente', response);
+        }, error => {
+          console.error('Error al enviar la notificación push', error);
+        });
+      })
+        ///
         return this.http.post(`${this.baseUrl}/notificaciones/crearNotificacion`, data);
+        
       })
     ).subscribe(response => {
       console.log(response);

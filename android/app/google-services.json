@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "876463465244",
+    "firebase_url": "https://admingepge-default-rtdb.firebaseio.com",
+    "project_id": "admingepge",
+    "storage_bucket": "admingepge.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876463465244:android:5e268a8c1935cb868750d9",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876463465244-ea9gdqrmc1du2r7e6r2r1kqni318ai5u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCVa8e0JOuZXraKvSRv2Tjmno8L9tjFCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "876463465244-ea9gdqrmc1du2r7e6r2r1kqni318ai5u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

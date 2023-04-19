@@ -103,3 +103,4 @@ export class MiPerfilPage implements OnInit {
     this.router.navigate(['/feed']);
   }
 }
+

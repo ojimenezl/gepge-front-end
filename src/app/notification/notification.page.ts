@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CreateAdPage } from '../create-ad/create-ad.page';
 import { NavigationExtras } from '@angular/router';
@@ -47,7 +47,22 @@ interface CreateNotificacion {
   EntregacodigoAnunciante:string;
   EntregacodigoTrabajador:string;
 }
-
+interface Cliente {
+  mensaje: string;
+  cliente: {
+    nombre: string;
+    email: string;
+    cedula: string;
+    celular: string;
+    ciudad: string;
+    fechaNacimiento: string;
+    //apellido: String,
+    //edad: Number,
+    password: string;
+    fechaCreacion: string;
+    __v: number;
+  }[];
+}
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.page.html',
@@ -55,6 +70,7 @@ interface CreateNotificacion {
 })
 export class NotificationPage implements OnInit {
   private baseUrl = environment.apiUrl;
+  private keyFCM =environment.keyFCM;
   userId: string;
   ads: any[] = [];
   ad: any[] = [];
@@ -122,6 +138,34 @@ export class NotificationPage implements OnInit {
       
     });
 
+    //notificacion para informar que se ha aceptado al postulante
+    ///
+
+    this.http.get<Cliente>(`${this.baseUrl}/clientes/obtenerTokenCliente/${ad.correoTrabajador}`).subscribe(
+      gettoken => {
+        console.log(gettoken.cliente);
+        
+    const token = gettoken.cliente;
+    const body = {
+      to: token,
+      notification: {
+        title: 'Nuevo Postulante',
+        body: 'Han aceptado tu postulado para el puesto que has aplicado, entra y revisalo!'
+      }
+    };
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.keyFCM
+    });
+    this.http.post('https://fcm.googleapis.com/fcm/send', body, { headers }).subscribe(response => {
+      console.log('La notificación push fue enviada correctamente', response);
+    }, error => {
+      console.error('Error al enviar la notificación push', error);
+    });
+    })
+    ///
+    ///
+
     this.http.get(`${this.baseUrl}/anuncios/obtenerAnunciosPorIdAnuncioPrincipal/${ad._idAnuncio}`).subscribe(
       response => {
         this.adsString = JSON.stringify(response);
@@ -135,11 +179,11 @@ export class NotificationPage implements OnInit {
           ad.tipo='noSeleccionado'
           this.http.post(`${this.baseUrl}/notificaciones/crearNotificacion`, ad).subscribe(response => {
             console.log(response,'fin');
-            this.router.navigateByUrl('/feed'); 
             
           });
           }
         }
+        this.router.navigateByUrl('/feed'); 
         
         //console.log("listooooo", objPostulantesRechazados);
         

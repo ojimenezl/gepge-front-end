@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { PushNotification, PushNotificationActionPerformed, PushNotifications, PushNotificationSchema, PushNotificationToken } from '@capacitor/push-notifications';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -16,7 +18,9 @@ export class SignUpPage implements OnInit {
   dias:any[] = [];
   meses:any[] = [];
   year:any[] = [];
-  constructor(private formBuilder: FormBuilder, private router: Router,private http: HttpClient) {
+  token:string="";
+
+  constructor(public alertController: AlertController,private formBuilder: FormBuilder, private router: Router,private http: HttpClient) {
     
     this.signUpForm = this.formBuilder.group({
       nombre: ['', Validators.required],
@@ -28,6 +32,8 @@ export class SignUpPage implements OnInit {
       year:['', Validators.required],
       mes:['', Validators.required],
       dia:['', Validators.required],
+      token:[''],
+      
       //confirmPassword: ['', Validators.required],
     });
   }
@@ -37,16 +43,52 @@ export class SignUpPage implements OnInit {
     this.meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     this.year = Array.from({length: 120}, (_, i) => (new Date().getFullYear() - i));
 
+//notificaciones
+
+
+
   }
 
   registerUser() {
     const data = this.signUpForm.value;
-    data.fechaNacimiento=data.dia+'-'+data.mes+'-'+data.year;
-    console.log(data.fechaNacimiento);
 
-    this.http.post(`${this.baseUrl}/clientes/crearCliente`, data).subscribe(response => {
-      console.log(response);
+     //notifications
+            PushNotifications.requestPermissions().then((result)=>{
+            if(result.receive)
+            {
+              PushNotifications.register();
+            }
+            })
+      
+            PushNotifications.addListener('registration',
+            (token:PushNotificationToken)=>{
+              console.log("token, ",token);
+              
+                  data.token = token.value
+                  data.fechaNacimiento=data.dia+'-'+data.mes+'-'+data.year;
+                  console.log(data.fechaNacimiento);
+              
+                  this.http.post(`${this.baseUrl}/clientes/crearCliente`, data).subscribe(response => {
+                    console.log(response);
+                  });
+              
+              
+              
+                  this.router.navigate(['/login']);
+
+            })
+
+
+ 
+  }
+
+
+  async presentAlert(notificacion: { title: string; body: string; }) {
+    const alert = await this.alertController.create({
+      header: ""+notificacion.title,
+      message: ""+notificacion.body,
+      buttons: ['OK']
     });
-    this.router.navigate(['/login']);
+    await alert.present();
   }
 }

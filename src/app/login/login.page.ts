@@ -87,6 +87,9 @@ export class LoginPage implements OnInit {
   goToSignup() {
     this.router.navigateByUrl('/sign-up');
   }
+  goToNoti(){
+    this.router.navigateByUrl('/home');
+  }
 
   async loginWithGoogle(): Promise<void> {
     try {
