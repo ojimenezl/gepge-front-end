@@ -184,6 +184,8 @@ export class FeedPage implements OnInit {
     this.navCtrl.navigateForward('/front-all');
   }
   login() {
+    localStorage.removeItem('userId');
+
     this.router.navigateByUrl('/login');
   }
   editAd(ad: Anuncio) {

@@ -18,6 +18,7 @@ export class LoginPage implements OnInit {
   loginForm: FormGroup;
   socialUser: SocialUser = {} as SocialUser;
   ads: string = '';
+  res:string='';
 
 
   constructor(
@@ -35,19 +36,7 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.authState.subscribe((user) => {
-      this.socialUser = user;
-      console.log(this.socialUser);
-      if (this.socialUser != null) {
-        this.nativeStorage.setItem('google_user', {
-          name: this.socialUser.name,
-          email: this.socialUser.email,
-          picture: this.socialUser.photoUrl,
-        }).then(() => {
-          console.log('Stored item!');
-        }, error => console.error('Error storing item', error));
-      }
-    });
+
   }
 
   login() {
@@ -55,30 +44,26 @@ export class LoginPage implements OnInit {
     console.log(data);
 
     this.http.post(`${this.baseUrl}/inicio-sesion/`, data).subscribe(response => {
-      console.log(data.email);
-      localStorage.setItem('userId', data.email);
-      console.log('para envio UserId',data.email,'<--');
-     
-        this.http.get(`${this.baseUrl}/anuncios/obtenerAnuncioPorCorreo?correo=${data.email}`)
-          .subscribe(response => {            
-            this.ads = JSON.stringify(response);
-            const miObjetoParseado = JSON.parse(this.ads);
-            const miPropiedad = miObjetoParseado;
-            console.log(miPropiedad.encontrado);
-            localStorage.setItem('accesoPagoEntreUsuarios', miPropiedad.encontrado.toString());
-            if(miPropiedad.encontrado){
-            this.router.navigate(['/feed']);
-            }else{
-              this.router.navigateByUrl('/acceso');
-            }
-            
-            
-          });
-      
-
-      
-
-
+      const res=JSON.parse(JSON.stringify(response));
+      if(res.mensaje == 'Inicio de Sesion Exitosa!'){
+        localStorage.setItem('userId', data.email);
+        console.log('para envio UserId',data.email,'<--');      
+          this.http.get(`${this.baseUrl}/anuncios/obtenerAnuncioPorCorreo?correo=${data.email}`)
+            .subscribe(response => {            
+              this.ads = JSON.stringify(response);
+              const miObjetoParseado = JSON.parse(this.ads);
+              const miPropiedad = miObjetoParseado;
+              console.log(miPropiedad.encontrado);
+              localStorage.setItem('accesoPagoEntreUsuarios', miPropiedad.encontrado.toString());
+              if(miPropiedad.encontrado){
+              this.router.navigate(['/feed']);
+              }else{
+                this.router.navigateByUrl('/acceso');
+              }           
+            });
+      }else{
+        alert(res.mensaje)
+      }
 
     });
     
@@ -91,18 +76,7 @@ export class LoginPage implements OnInit {
     this.router.navigateByUrl('/home');
   }
 
-  async loginWithGoogle(): Promise<void> {
-    try {
-      this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((user) => {
-        console.log(user);
-        this.socialUser = user;
-        localStorage.setItem('userId', user.email);
-        this.router.navigateByUrl('/feed');
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }
+
   
 }
 
