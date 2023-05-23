@@ -1,10 +1,16 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToHome()">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>
       Mis Publicaciones
     </ion-title>
   </ion-toolbar>
 </ion-header>
+
 
 <ion-content>
 
@@ -34,7 +40,10 @@
                 <ion-toolbar>
                   <ion-title>{{ currentAd?.titulo }}{{ currentAd?.estado }}</ion-title>
                   <ion-buttons slot="end">
-                    <ion-button (click)="setOpen(false,ad)">Close</ion-button>
+                    <ion-button (click)="goToHome()">
+                      <ion-icon name="home"></ion-icon>
+                    </ion-button>
+                    <ion-button (click)="setOpen(false,ad)">Cerrar</ion-button>
                   </ion-buttons>
                 </ion-toolbar>
               </ion-header>

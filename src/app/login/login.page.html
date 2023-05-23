@@ -1,22 +1,21 @@
 <ion-content>
   <div class="container">
-    <img src="../../assets/icon/GEPGE5.png" height="200" width="200" alt="logo de ejemplo">
+    <img src="../../assets/icon/JOBOX2.png" alt="logo de ejemplo" class="background-image">
 
     <form [formGroup]="loginForm" (ngSubmit)="login()" class="ion-align-items-center">
-      <ion-list style="background-color: transparent;margin-top: 10px;margin-bottom: 10px;">
-        <ion-item>
-          <ion-label position="floating">Email</ion-label>
-          <ion-input type="email" formControlName="email"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Password</ion-label>
-          <ion-input type="password" formControlName="password"></ion-input>
+      <ion-list style="background-color: transparent;margin-top: 173px;margin-bottom: -243px;">
+        <ion-item style="background-color: #202020bc;margin-top: 10px;margin-bottom: 10px;border-radius: 10px;">
+          <ion-label position="floating" class="white-label">Email</ion-label>
+          <ion-input type="email" formControlName="email" class="white-input"></ion-input>
+        </ion-item >
+        <ion-item style="background-color: #202020bc;margin-top: 10px;margin-bottom: 10px;border-radius: 10px;">
+          <ion-label position="floating" class="white-label">Password</ion-label>
+          <ion-input type="password" formControlName="password" class="white-input"></ion-input>
         </ion-item>
       </ion-list>
       <ion-button class="btn-login" type="submit" expand="block" [disabled]="!loginForm.valid" >Iniciar Sesion</ion-button>
     </form>
-
     <ion-button class="btn-login" expand="block" (click)="goToSignup()" >Crear Cuenta</ion-button>
-    <ion-button class="btn-login" expand="block" (click)="goToNoti()" > Recuperar Cuenta</ion-button>
+    <!-- <ion-button class="btn-login" expand="block" (click)="goToNoti()" > Recuperar Cuenta</ion-button> -->
   </div>
 </ion-content>

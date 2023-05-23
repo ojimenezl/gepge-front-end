@@ -201,4 +201,9 @@ export class MisPublicacionesPage implements OnInit {
   eliminarAnuncio(ad:any) {
     
   }
+  goToHome() {
+    this.router.navigateByUrl('/feed');
+
+
+  }
 }

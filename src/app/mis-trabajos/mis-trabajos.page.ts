@@ -197,5 +197,8 @@ export class MisTrabajosPage implements OnInit {
   })    
         
   }
+  goToHome() {
+    this.router.navigateByUrl('/feed');
+  }
 
 }

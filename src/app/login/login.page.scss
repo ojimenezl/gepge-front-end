@@ -1,3 +1,7 @@
+ion-content {
+    // --ion-background-color: #5b2bc2; 
+    --ion-background-color: #4932DE
+  }
 .container {
     display: flex;
     flex-direction: column;
@@ -11,4 +15,17 @@
       }
   }
   
- 
+  .background-image {
+    position: absolute;
+    z-index: -1;
+    height: 82%;
+    top: -125px;
+    object-fit: cover;
+  }
+  .white-label {
+    color: white !important;
+  }
+  
+  .white-input {
+    color: white !important;
+  }

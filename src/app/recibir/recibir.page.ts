@@ -176,6 +176,8 @@ export class RecibirPage implements OnInit {
     });
     return await modal.present();
   }
-  
+  goToHome() {
+    this.router.navigateByUrl('/feed');
+  }
 
 }

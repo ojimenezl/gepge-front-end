@@ -1,3 +1,7 @@
+ion-content {
+  background-image: url("../../assets/font/back.png");
+}
+
 .edit-button {
     --ion-color-primary: #5b2bc2; // Define el color morado que deseas
   }
@@ -82,7 +86,9 @@ p{
 }
 
 .menu-content{
-  --background: transparent;
+   --background: transparent;
+   height: 100%;
+   width: 100%;
 }
 
 .icon-card {
@@ -92,3 +98,10 @@ ion-header.scroll-vanish {
   transform: translateY(-100%);
   transition: transform 0.3s ease-in-out;
 }
+// .background-image {
+//   position: absolute;
+//   z-index: -1;
+//   height: 82%;
+//   top: 0px;
+//   object-fit: cover;
+// }

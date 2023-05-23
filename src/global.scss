@@ -34,7 +34,8 @@ ion-content {
 
 body.dark {
   ion-content {
-    --ion-background-color: #000000;
+     --ion-background-color: #000000;
+    //background-image: url("assets/font/backB.png");
     color: #fff;
   }
 }
@@ -78,4 +79,7 @@ ion-item {
   --background: transparent;
   --color: black;
   --border-color: rgba(87, 16, 168, 0.134);
+}
+.list-md {
+  padding-bottom: 298px;
 }

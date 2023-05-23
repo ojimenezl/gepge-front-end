@@ -94,7 +94,7 @@
     <ng-container *ngIf="ad.tipo === 'Postulante' && ad.para === userId && ad.estado !== '1'">
       <!-- Card para aceptacionTrabajo -->
       <ion-card-header>
-        <ion-card-title>Postulantes para {{ ad.titulo }}</ion-card-title>
+        <ion-card-title>Postulante para {{ ad.titulo }}</ion-card-title>
         <ion-card-subtitle>{{ ad.nombreTrabajador }}</ion-card-subtitle>
         <ion-card-subtitle>{{ ad.lugarTrabajador }}</ion-card-subtitle>
       </ion-card-header>
@@ -118,7 +118,7 @@
     <ng-container *ngIf="ad.tipo === 'Postulante' && ad.para === userId && ad.estado === '1'">
       <!-- Card para aceptacionTrabajo -->
       <ion-card-header>
-        <ion-card-title>Postulantes Aceptado para {{ ad.titulo }}</ion-card-title>
+        <ion-card-title>Postulante Aceptado para {{ ad.titulo }}</ion-card-title>
         <ion-card-subtitle>{{ ad.lugarTrabajador }}</ion-card-subtitle>
       </ion-card-header>
   

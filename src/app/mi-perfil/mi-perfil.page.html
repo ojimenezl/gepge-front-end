@@ -1,10 +1,16 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToHome()">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>
       Mi Perfil
     </ion-title>
   </ion-toolbar>
 </ion-header>
+
 
 <ion-content class="ion-padding">
   <form [formGroup]="MiPerfilForm" (ngSubmit)="updateUser()">

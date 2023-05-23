@@ -142,4 +142,7 @@ export class CreateAdPage implements OnInit {
     this.autocompleteItems = []
     this.autocomplete.input = ''
   }
+  goToHome() {
+    this.router.navigateByUrl('/feed');
+  }
 }

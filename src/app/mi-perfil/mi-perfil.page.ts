@@ -102,5 +102,8 @@ export class MiPerfilPage implements OnInit {
     });
     this.router.navigate(['/feed']);
   }
+  goToHome() {
+    this.router.navigateByUrl('/feed');
+  }
 }
 

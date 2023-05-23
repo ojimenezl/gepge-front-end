@@ -128,5 +128,8 @@ export class TerminadoPage implements OnInit {
     });
     return await modal.present();
   }
+  goToHome() {
+    this.router.navigateByUrl('/feed');
+  }
 
 }

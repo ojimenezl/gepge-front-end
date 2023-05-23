@@ -10,7 +10,7 @@ import { MenuController } from '@ionic/angular';
 import { environment } from '../../environments/environment';
 import { DatePipe } from '@angular/common';
 import { MensajesPopPage } from '../mensajes-pop/mensajes-pop.page';
-
+import { RefresherEventDetail } from '@ionic/core';
 
 import * as moment from 'moment';
 
@@ -352,5 +352,10 @@ export class FeedPage implements OnInit {
     return await modal.present();
   }
 
+  doRefresh() {
+    this.getAds();
+    this.contNotifications();
+    this.getNombre();
+  }
 
 }

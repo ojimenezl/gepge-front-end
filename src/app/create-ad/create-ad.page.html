@@ -1,5 +1,10 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToHome()">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>
       Crear Anuncio
     </ion-title>
@@ -9,24 +14,27 @@
 <ion-content class="ion-padding">
   <form [formGroup]="AdForm" (ngSubmit)="addAd()">
     <ion-item>
-      <ion-label position="floating">Titulo</ion-label>
-      <ion-textarea formControlName="titulo"></ion-textarea>
+      <ion-label position="floating">¿Qué necesitas?</ion-label>
+      <ion-select formControlName="titulo">
+        <ion-select-option value="servicio profesional">Servicio Profesional </ion-select-option>
+        <ion-select-option value="encomienda">Encomienda</ion-select-option>
+      </ion-select>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">¿Qué necesitas?</ion-label>
+      <ion-label position="floating">Describe lo que necesitas</ion-label>
       <ion-textarea formControlName="descripcion"></ion-textarea>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Precio</ion-label>
+      <ion-label position="floating">Ingresa un precio</ion-label>
       <ion-input type="number" step="0.01" formControlName="precioAnunciante"></ion-input>
     </ion-item>
 
 
   
     <ion-item>
-      <ion-label>Lugar</ion-label>
+      <ion-label>En que lugar te encuentras</ion-label>
     </ion-item>
     <ion-item>
       <ion-searchbar class="serch-map" formControlName="lugarAnunciante" [(ngModel)]="autocomplete.input" (ionInput)="UpdateSearchResults()" placeholder="Search for a place" (ionClear)="ClearAutocomplete()"></ion-searchbar>
@@ -44,12 +52,12 @@
     </ion-item> 
 
     <ion-item>
-      <ion-label>Seleccione la hora</ion-label>
+      <ion-label>Selecciona la hora</ion-label>
       <ion-input type="time" formControlName="tiempoAnunciante"></ion-input>
     </ion-item>
  
     <ion-item>
-      <ion-label position="stacked">Pago</ion-label>
+      <ion-label position="stacked">Tu pago va a ser</ion-label>
       <ion-select formControlName="tipoPago">
         <ion-select-option value="efectivo">Efectivo</ion-select-option>
         <ion-select-option value="transferencia">Transferencia</ion-select-option>
