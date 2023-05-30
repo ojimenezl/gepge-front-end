@@ -1,7 +1,12 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToHome()">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>
-     Editar Anuncio
+      Editar Anuncio
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -10,7 +15,13 @@
   <form [formGroup]="AdForm" (ngSubmit)="addAd()">
     <ion-item>
       <ion-label position="floating">Titulo</ion-label>
-      <ion-textarea formControlName="titulo"></ion-textarea>
+      <ion-select formControlName="titulo">
+        <ion-select-option value="Servicio Profesional">Servicio Profesional</ion-select-option>
+        <ion-select-option value="Encomienda">Encomienda</ion-select-option>
+        <ion-select-option value="Alquiler">Alquiler</ion-select-option>
+        <ion-select-option value="Empleo Fijo">Empleo Fijo</ion-select-option>
+
+      </ion-select>
     </ion-item>
 
     <ion-item>
@@ -19,8 +30,8 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Precio</ion-label>
-      <ion-input type="number" step="0.01" formControlName="precioAnunciante"></ion-input>
+      <ion-label position="floating">Ingresa el precio</ion-label>
+      <ion-input type="number" step="0.01" formControlName="precioAnunciante" ></ion-input>
     </ion-item>
 
     <ion-item>
@@ -45,14 +56,14 @@
     </ion-list>
 
     <ion-item>
-      <ion-label>¿Necesita taxi?</ion-label>
+      <ion-label>¿El trabajdor necesita ir en taxi?</ion-label>
     <ion-item slot="end">
       <ion-toggle formControlName="transporte"></ion-toggle>
     </ion-item>
     </ion-item>
 
     <ion-item>
-      <ion-label>Seleccione la hora</ion-label>
+      <ion-label>¿Hora de la entrega?</ion-label>
       <ion-input type="time" formControlName="tiempoAnunciante"></ion-input>
     </ion-item>
  
@@ -64,6 +75,6 @@
       </ion-select>
     </ion-item>
 
-    <ion-button type="submit" expand="block" [disabled]="!AdForm.valid">Register</ion-button>
+    <ion-button type="submit" expand="block" [disabled]="!AdForm.valid">Guardar</ion-button>
   </form>
 </ion-content>

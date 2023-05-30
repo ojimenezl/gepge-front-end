@@ -115,7 +115,7 @@ export class FeedPage implements OnInit {
         const miPropiedad = miObjetoParseado;
         localStorage.setItem('accesoPagoEntreUsuarios', miPropiedad.encontrado.toString());
 
-        console.log(miPropiedad.encontrado);
+        console.log(miPropiedad);
         if (miPropiedad.encontrado || localStorage.getItem('accesoPagoEntreUsuarios') === 'true') {
           console.log("en true");
 
@@ -126,7 +126,7 @@ export class FeedPage implements OnInit {
           //tema oscuro por defecto
           //this.toggleDarkMode();
         } else {
-          console.log("en false");
+        //  console.log("en false");
 
           this.router.navigateByUrl('/acceso');
 
@@ -151,15 +151,15 @@ export class FeedPage implements OnInit {
           this.ads.forEach(res => {
             this.ads = this.ads.filter(ad => ad._id !== res.idAnuncioPrincipal);
           });
-          console.log('feed arriba', this.ads);
+        //  console.log('feed arriba', this.ads);
         } else {
           this.ads = this.ads.filter(ad => ad.postulante === '' && ad.estado === '0');
-          console.log('feed abajo', this.ads);
+         // console.log('feed abajo', this.ads);
         }
 
       },
       error => {
-        console.log(error);
+        //console.log(error);
       }
     );
 
@@ -189,7 +189,7 @@ export class FeedPage implements OnInit {
     this.router.navigateByUrl('/login');
   }
   editAd(ad: Anuncio) {
-    console.log("listo", ad);
+    //console.log("listo", ad);
     const navigationExtras: NavigationExtras = {
       state: {
         ad: ad,
@@ -199,7 +199,7 @@ export class FeedPage implements OnInit {
     this.router.navigate(['/edit-ad'], navigationExtras);
   }
   aplicar(ad: Anuncio) {
-    console.log("listo para apply", this.nombre);
+    //console.log("listo para apply", this.nombre);
     const navigationExtras: NavigationExtras = {
       state: {
         ad: ad,
@@ -214,12 +214,12 @@ export class FeedPage implements OnInit {
     if (confirm('¿Estás seguro de que quieres eliminar este anuncio?')) {
       this.http.delete(`${this.baseUrl}/anuncios/eliminarAnuncio/${ad._id}`).subscribe(
         response => {
-          console.log(response);
+         // console.log(response);
           // Actualizar la lista de anuncios después de la eliminación
           this.getAds();
         },
         error => {
-          console.log(error);
+         // console.log(error);
         }
       );
     }
@@ -235,11 +235,11 @@ export class FeedPage implements OnInit {
     this.http.get<ApiResponseNotification>(`${this.baseUrl}/notificaciones/obtenerNotificacion`).subscribe(
       data => {
         const totalNotifications = data.clientes.filter(ad => ad.para === this.userId);
-        console.log('conteo ', totalNotifications);
+       // console.log('conteo ', totalNotifications);
         this.newNotificationsCount = totalNotifications.length;
       },
       error => {
-        console.log(error);
+       // console.log(error);
       }
     );
   }
@@ -301,7 +301,7 @@ export class FeedPage implements OnInit {
       });
     }
     if (menuItems) {
-      console.log("aqui btn ", menuItems);
+     // console.log("aqui btn ", menuItems);
 
       menuItems.forEach(menuItem => {
         menuItem.classList.toggle('menu-item-dark', this.darkModeEnabled);
@@ -335,7 +335,7 @@ export class FeedPage implements OnInit {
         localStorage.setItem('nombre', this.nombre);
         localStorage.setItem('celular', this.celular);
 
-        console.log("nombre ", this.nombre, this.celular);
+       // console.log("nombre ", this.nombre, this.celular);
       }
     )
   }

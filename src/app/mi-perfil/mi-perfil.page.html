@@ -36,21 +36,23 @@
 
     <ion-item>
       <ion-label position="floating">Celular</ion-label>
-      <ion-input type="tel" formControlName="celular"></ion-input>
+      <ion-input type="number" formControlName="celular"></ion-input>
       <ion-icon name="flag-outline" slot="end"></ion-icon>
-      <ion-input type="text" value="+593" slot="start" disabled></ion-input>
+      <!-- <ion-input type="text" value="+593" slot="start" disabled></ion-input> -->
     </ion-item>
     
     <ion-item>
-      <ion-label position="floating">Ciudad</ion-label>
-      <ion-select formControlName="ciudad">
-        <ion-select-option value="Quito">Quito</ion-select-option>
-        <ion-select-option value="Guayaquil">Guayaquil</ion-select-option>
-        <ion-select-option value="Cuenca">Cuenca</ion-select-option>
-        <ion-select-option value="Manta">Manta</ion-select-option>
-        <!-- Añade más opciones aquí -->
-      </ion-select>
+      <ion-label>¿Dónde vives?</ion-label>
     </ion-item>
+    <ion-item>
+      <ion-searchbar class="serch-map" formControlName="ciudad" [(ngModel)]="autocomplete.input" (ionInput)="UpdateSearchResults()" placeholder="Search for a place" (ionClear)="ClearAutocomplete()"></ion-searchbar>
+    </ion-item>
+    
+    <ion-list class="serch-map" *ngIf="showResults && autocompleteItems.length > 0">
+      <ion-item class="serch-map" *ngFor="let item of autocompleteItems" tappable (click)="SelectSearchResult(item)">
+        {{ item.description }}
+      </ion-item>
+    </ion-list>
     
     <ion-item>
       <ion-label position="floating">Fecha Nacimiento</ion-label>

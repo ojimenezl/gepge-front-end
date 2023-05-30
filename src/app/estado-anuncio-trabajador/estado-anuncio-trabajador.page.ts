@@ -90,7 +90,7 @@ export class EstadoAnuncioTrabajadorPage implements OnInit {
         }
         this.precioTotal = (this.ad.precioTrabajador+parseFloat(this.ad.precioTransporte)).toString()
        
-        console.log("ad aqui= ", this.ad);
+        //console.log("ad aqui= ", this.ad);
         
         // this.AdForm.patchValue({
         //   titulo: this.ad.titulo,
@@ -110,11 +110,11 @@ ionViewDidEnter() {
 }
   addAd() {
     const data = this.AdForm.value;
-    console.log(this.anuncioId); // imprimir el ID del anuncio
+    //console.log(this.anuncioId); // imprimir el ID del anuncio
     data.creador = localStorage.getItem('userId') || '';
   
     this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${this.anuncioId}`, data).subscribe(response => {
-      console.log(response);
+      //console.log(response);
       this.router.navigateByUrl('/feed');
       
     });
@@ -127,7 +127,7 @@ ionViewDidEnter() {
     const miObjetoParseado = JSON.parse(this.ads);
     const miPropiedad = miObjetoParseado;
     this.idAnuncioPrincipal=miPropiedad.idAnuncioPrincipal
-    console.log(this.idAnuncioPrincipal);
+    //console.log(this.idAnuncioPrincipal);
 
     const navigationExtras: NavigationExtras = {
       state: {
@@ -139,4 +139,8 @@ ionViewDidEnter() {
 
   }
   )}
+  goToHome() {
+    this.router.navigate(['/feed']);
+
+  }
 }

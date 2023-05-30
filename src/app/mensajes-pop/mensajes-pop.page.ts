@@ -74,7 +74,7 @@ export class MensajesPopPage implements OnInit {
   @ViewChild(IonContent, { static: true }) content!: IonContent;
   constructor(private formBuilder: FormBuilder, private modalController: ModalController, private navCtrl: NavController, private navParams: NavParams, private router: Router, private http: HttpClient) {
     this.userId = localStorage.getItem('userId') || '';
-    console.log("userid ", this.userId);
+   // console.log("userid ", this.userId);
     this.AdForm = this.formBuilder.group({
 
       digit1: ['', Validators.required],
@@ -112,7 +112,7 @@ export class MensajesPopPage implements OnInit {
 
   }
   validar() {
-    console.log("aqui");
+   // console.log("aqui");
 
     const data = this.AdForm.value;
     this.ingresoCodigo = data.digit1.toString() + data.digit2.toString() + data.digit3.toString() + data.digit4.toString() + data.digit5.toString();
@@ -127,7 +127,7 @@ export class MensajesPopPage implements OnInit {
         const miPropiedad = miObjetoParseado;
         if (miPropiedad.hasOwnProperty('codigoAnunciante')) {
           this.codigo = miPropiedad.codigoAnunciante
-          console.log(this.ingresoCodigo, " == ", this.codigo.toString());
+        //  console.log(this.ingresoCodigo, " == ", this.codigo.toString());
 
           if (this.ingresoCodigo == this.codigo.toString()) {
             const dataRestrigncion ={
@@ -136,18 +136,18 @@ export class MensajesPopPage implements OnInit {
             }
 
             this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${this.anuncioId}`, dataRestrigncion).subscribe(response => {
-              console.log(response);       
+            //  console.log(response);       
             });
             this.http.get(`${this.baseUrl}/anuncios/obtenerAnunciosPorIdAnuncioPrincipal/${this.anuncioId}`).subscribe(
               response => {
-                console.log("anuncio hijo ",response);
+              //  console.log("anuncio hijo ",response);
                 this.adsString  = JSON.stringify(response);
                 const miObjetoParseado = JSON.parse(this.adsString);
                 const miPropiedad = miObjetoParseado;
-                console.log("id hijo ",miPropiedad.anuncios[0]._id);
+              //  console.log("id hijo ",miPropiedad.anuncios[0]._id);
                 
                 this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${miPropiedad.anuncios[0]._id}`, dataRestrigncion).subscribe(response => {
-                  console.log(response);              
+              //    console.log(response);              
                 });
                 
               })

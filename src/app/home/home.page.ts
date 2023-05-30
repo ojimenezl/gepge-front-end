@@ -29,7 +29,7 @@ interface ApiResponse {
 })
 export class HomePage {
   ngOnInit() {
-    console.log('Initializing HomePage22222');
+    //console.log('Initializing HomePage22222');
 
     // Request permission to use push notifications
     // iOS will prompt user and return if they granted permission or not
@@ -47,7 +47,7 @@ export class HomePage {
     });
 
     PushNotifications.addListener('registration', (token: Token) => {
-      console.log('aquiii token',token.value);
+     // console.log('aquiii token',token.value);
 
       alert('Push registration success, token: ' + token.value);
     });

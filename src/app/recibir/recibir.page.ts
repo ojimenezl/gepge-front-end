@@ -74,7 +74,7 @@ export class RecibirPage implements OnInit {
           this.AdForm.get('tipoPago')?.setValue(this.tipoPago);
         }
 
-        console.log("idd anunciante",this.tipoPago);
+        //console.log("idd anunciante",this.tipoPago);
         
         this.http.get<ApiResponse>(`${this.baseUrl}/anuncios/obtenerAnuncio/${this.anuncioId}`).subscribe(
           data => {
@@ -96,7 +96,7 @@ export class RecibirPage implements OnInit {
                 codigoAnunciante: randomNumber
               };
               this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${this.anuncioId}`, data).subscribe(response => {
-                console.log(response);                
+              //  console.log(response);                
               });
             }
           
@@ -119,7 +119,7 @@ export class RecibirPage implements OnInit {
     
   }
   validar(){
-    console.log("aqui");
+    //console.log("aqui");
     
     const data = this.AdForm.value;
     this.ingresoCodigo=data.digit1.toString()+data.digit2.toString()+data.digit3.toString()+data.digit4.toString()+data.digit5.toString();
@@ -133,7 +133,7 @@ export class RecibirPage implements OnInit {
         const miPropiedad = miObjetoParseado;
         if (miPropiedad.hasOwnProperty('codigoTrabajador')) {
           this.codigo=miPropiedad.codigoTrabajador   
-          console.log("propiedad",miPropiedad);
+         // console.log("propiedad",miPropiedad);
 
           if(this.ingresoCodigo == this.codigo.toString()){
             const dataRestrigncion ={
@@ -141,18 +141,18 @@ export class RecibirPage implements OnInit {
               EntregacodigoAnunciante:'noEntregado'
             }
             this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${this.anuncioId}`, dataRestrigncion).subscribe(response => {
-              console.log(response);              
+           //   console.log(response);              
             });
             this.http.get(`${this.baseUrl}/anuncios/obtenerAnunciosPorIdAnuncioPrincipal/${this.anuncioId}`).subscribe(
               response => {
-                console.log("anuncio hijo ",response);
+             //   console.log("anuncio hijo ",response);
                 this.adsString  = JSON.stringify(response);
                 const miObjetoParseado = JSON.parse(this.adsString);
                 const miPropiedad = miObjetoParseado;
-                console.log("id hijo ",miPropiedad.anuncios[0]._id);
+              //  console.log("id hijo ",miPropiedad.anuncios[0]._id);
                 
                 this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${miPropiedad.anuncios[0]._id}`, dataRestrigncion).subscribe(response => {
-                  console.log(response);              
+                //  console.log(response);              
                 });
                 
               })
@@ -177,7 +177,8 @@ export class RecibirPage implements OnInit {
     return await modal.present();
   }
   goToHome() {
-    this.router.navigateByUrl('/feed');
+    this.router.navigate(['/feed']);
+
   }
 
 }

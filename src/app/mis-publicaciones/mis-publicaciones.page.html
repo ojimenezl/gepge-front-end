@@ -38,7 +38,7 @@
             <ng-template>
               <ion-header>
                 <ion-toolbar>
-                  <ion-title>{{ currentAd?.titulo }}{{ currentAd?.estado }}</ion-title>
+                  <ion-title>{{ currentAd?.titulo }}</ion-title>
                   <ion-buttons slot="end">
                     <ion-button (click)="goToHome()">
                       <ion-icon name="home"></ion-icon>
@@ -69,7 +69,7 @@
                 </ion-row>
                 <ion-row>
                   <ion-col size="12" class="ion-text-center">
-                  <ion-button  class="eliminate-button" (click)="eliminateAd(currentAd?._id)" *ngIf="ad.EntregacodigoAnunciante !== 'noEntregado'">
+                  <ion-button  class="eliminate-button" (click)="eliminateAd(currentAd?._id)" *ngIf="ad.EntregacodigoAnunciante === 'noEntregado' || ad.EntregacodigoAnunciante === 'enEspera'">
                     <ion-icon name="trash"></ion-icon>
                   </ion-button>
                 </ion-col>

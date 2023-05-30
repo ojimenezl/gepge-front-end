@@ -54,7 +54,7 @@ export class CreateAdPage implements OnInit {
     this.AdForm = this.formBuilder.group({
       titulo: ['', Validators.required],
       descripcion: ['', Validators.required],
-      precioAnunciante: [0, Validators.required],
+      precioAnunciante: ['', Validators.required],
       lugarAnunciante: ['', Validators.required],
       transporte: [false],
       tiempoAnunciante: ['', Validators.required],
@@ -83,19 +83,21 @@ export class CreateAdPage implements OnInit {
 
   addAd() {
     const data = this.AdForm.value;
-    console.log(data);
+    //console.log(data);
     data.creador = localStorage.getItem('userId') || '';
     data.nombreAnunciante= localStorage.getItem('nombre') || '';
     data.numeroAnunciante= localStorage.getItem('celular') || '';
     data.postulante = '';
-    data.estado='0'
+    data.estado='0';
+    data.EntregacodigoAnunciante="enEspera";
+    data.EntregacodigoTrabajador="enEspera";
 
     this.http.get<Cliente>(`${this.baseUrl}/clientes/obtenerTokenCliente/${localStorage.getItem('userId')}`).subscribe(
       token => {
-        console.log("token: ",token.cliente);
+       // console.log("token: ",token.cliente);
         data.token=token.cliente
         this.http.post(`${this.baseUrl}/anuncios/crearAnuncio`, data).subscribe(response => {
-          console.log(response);
+          //console.log(response);
         });
       })
 
@@ -143,6 +145,7 @@ export class CreateAdPage implements OnInit {
     this.autocomplete.input = ''
   }
   goToHome() {
-    this.router.navigateByUrl('/feed');
+    this.router.navigate(['/feed']);
+
   }
 }

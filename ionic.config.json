@@ -3,5 +3,15 @@
   "integrations": {
     "capacitor": {}
   },
-  "type": "angular"
+  "type": "angular",
+  "cordova": {
+    "icon": {
+      "sources": {
+        "icon": "src/assets/icon/iconoJobox.png",
+        "platform": "android",
+        "density": "xxxhdpi"
+      }
+    }
+  }
 }
+

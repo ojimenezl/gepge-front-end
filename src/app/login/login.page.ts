@@ -41,19 +41,19 @@ export class LoginPage implements OnInit {
 
   login() {
     const data = this.loginForm.value;
-    console.log(data);
+    //console.log(data);
 
     this.http.post(`${this.baseUrl}/inicio-sesion/`, data).subscribe(response => {
       const res=JSON.parse(JSON.stringify(response));
       if(res.mensaje == 'Inicio de Sesion Exitosa!'){
         localStorage.setItem('userId', data.email);
-        console.log('para envio UserId',data.email,'<--');      
+       // console.log('para envio UserId',data.email,'<--');      
           this.http.get(`${this.baseUrl}/anuncios/obtenerAnuncioPorCorreo?correo=${data.email}`)
             .subscribe(response => {            
               this.ads = JSON.stringify(response);
               const miObjetoParseado = JSON.parse(this.ads);
               const miPropiedad = miObjetoParseado;
-              console.log(miPropiedad.encontrado);
+            //  console.log(miPropiedad.encontrado);
               localStorage.setItem('accesoPagoEntreUsuarios', miPropiedad.encontrado.toString());
               if(miPropiedad.encontrado){
               this.router.navigate(['/feed']);

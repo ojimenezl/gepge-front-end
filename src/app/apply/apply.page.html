@@ -12,7 +12,7 @@
       <ion-label>Anunciante : {{ ad.nombreAnunciante }}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>REQUERIMIENTO</ion-label>
+      <ion-label>Requerimiento:</ion-label>
     </ion-item>
     <ion-card>
       <ion-card-header>
@@ -46,25 +46,25 @@
     </ion-item>
 
     <ion-item>
-      Estas deacuerdo con el precio?
+      ¿Estás de acuerdo con el precio?
       <ion-item slot="end">
          <ion-toggle [(ngModel)]="mostrarPrecio" [ngModelOptions]="{standalone: true}"></ion-toggle>
       </ion-item>
     </ion-item>
     <ion-item [hidden]="mostrarPrecio">
-      <ion-label position="floating">Si no estás de acuerdo con el precio, puedes proponer el precio del servicio:</ion-label>
+      <ion-label position="floating">Puedes proponer el precio del servicio:</ion-label>
       <ion-input type="number" step="0.01" formControlName="precioTrabajador"></ion-input>
     </ion-item>
     
 
     <ion-item>
-      Estas deacuerdo con la hora?
+      ¿Estás de acuerdo con la hora?
       <ion-item slot="end">
          <ion-toggle [(ngModel)]="mostrarHora" [ngModelOptions]="{standalone: true}"></ion-toggle>
       </ion-item>
     </ion-item>
     <ion-item [hidden]="mostrarHora">
-      <ion-label position="floating">Si no estás de acuerdo con el precio, puedes proponer el precio del servicio:</ion-label>
+      <ion-label position="floating">Puedes proponer la hora de entrega:</ion-label>
       <ion-input type="time" formControlName="tiempoTrabajador"></ion-input>
       
       <!-- <ion-input type="time" formControlName="tiempoTrabajador"> {{ ad.tiempoAnunciante }} </ion-input> -->
@@ -72,7 +72,7 @@
     
 
     <ion-item>
-      <ion-label>Donde te encuentras?</ion-label>
+      <ion-label>¿Dónde te encuentras?</ion-label>
     </ion-item>
     <ion-item>
       <ion-searchbar class="serch-map" formControlName="lugarTrabajador" [(ngModel)]="autocomplete.input" (ionInput)="UpdateSearchResults()" placeholder="Buscar.." (ionClear)="ClearAutocomplete()"></ion-searchbar>
@@ -85,7 +85,7 @@
     </ion-list>
 
     <ion-item>
-      <ion-label *ngIf="ad.transporte === 'true'" position="floating">Cual es el precio del taxi?</ion-label>
+      <ion-label *ngIf="ad.transporte === 'true'" position="floating">¿Cuál es el precio del taxi?</ion-label>
       <ion-input *ngIf="ad.transporte === 'true'" formControlName="precioTransporte"></ion-input>
     </ion-item>
 

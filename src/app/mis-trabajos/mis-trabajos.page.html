@@ -22,8 +22,8 @@
             - {{ ad.titulo }}
           </p>
           <ion-buttons slot="end">
-            <ion-button *ngIf="ad.EntregacodigoAnunciante === 'noEntregado'" class="edit-button" slot="end">
-              Pendiente de pago {{ currentAd?.estado }}<ion-icon name="pencil">Ver Estado</ion-icon>
+            <ion-button *ngIf="ad.EntregacodigoAnunciante === 'noEntregado'" class="edit-button" slot="end" (click)="goToEstadoTrabajador(ad)">
+              Pendiente de pago {{ currentAd?.estado }}<ion-icon name="error" >Ver Estado</ion-icon>
            </ion-button>
             <ion-button *ngIf="ad.estado === '1'" class="edit-button" slot="end" (click)="goToEstadoTrabajador(ad)">
               Aprobado {{ currentAd?.estado }}<ion-icon name="pencil">Ver Estado</ion-icon>

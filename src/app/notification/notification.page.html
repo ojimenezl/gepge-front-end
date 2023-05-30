@@ -95,13 +95,16 @@
       <!-- Card para aceptacionTrabajo -->
       <ion-card-header>
         <ion-card-title>Postulante para {{ ad.titulo }}</ion-card-title>
-        <ion-card-subtitle>{{ ad.nombreTrabajador }}</ion-card-subtitle>
-        <ion-card-subtitle>{{ ad.lugarTrabajador }}</ion-card-subtitle>
+        <ion-card-subtitle>Nombre: {{ ad.nombreTrabajador }}</ion-card-subtitle>
+        <ion-card-subtitle>El trabajor esta en: {{ ad.lugarTrabajador }}</ion-card-subtitle>
       </ion-card-header>
   
       <ion-card-content>
         <p>{{ ad.descripcion }}</p>
-        <p>Precio: {{ ad.precioTrabajador | currency:'USD':'symbol':'1.2-2' }}</p>
+      </ion-card-content>
+      <ion-card-content>
+        <p>Precio Ofertado: {{ ad.precioTrabajador | currency:'USD':'symbol':'1.2-2' }}</p>
+        <p>Hora Ofertada: {{ ad.tiempoTrabajador }}</p>
         
         <ion-button color="success" (click)="aceptar(ad)">
           <ion-icon name="checkmark"></ion-icon>
@@ -119,12 +122,17 @@
       <!-- Card para aceptacionTrabajo -->
       <ion-card-header>
         <ion-card-title>Postulante Aceptado para {{ ad.titulo }}</ion-card-title>
-        <ion-card-subtitle>{{ ad.lugarTrabajador }}</ion-card-subtitle>
+        <ion-card-subtitle>Nombre: {{ ad.nombreTrabajador }}</ion-card-subtitle>
+        <ion-card-subtitle>El trabajor esta en: {{ ad.lugarTrabajador }}</ion-card-subtitle>
+        
       </ion-card-header>
   
       <ion-card-content>
         <p>{{ ad.descripcion }}</p>
-        <p>Precio: {{ ad.precioTrabajador | currency:'USD':'symbol':'1.2-2' }}</p>
+      </ion-card-content>
+      <ion-card-content>
+        <p>Precio Aceptado: {{ ad.precioTrabajador | currency:'USD':'symbol':'1.2-2' }}</p>
+        <p>Hora Acaptada: {{ ad.tiempoTrabajador }}</p>
         
         <ion-button color="success" (click)="goToMisPublicaciones()">
           <ion-icon name="checkmark"></ion-icon>

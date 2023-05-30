@@ -31,9 +31,14 @@
         <ion-select-option value="transferencia">Transferencia</ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-text class="text-recuerda">
-      <p>Recuerda: No ingreses el codigo si aun no has recibido el producto, si lo ingresar es bajo tu responsabilidad</p>
-      </ion-text>
+    <ion-card color="warning">
+      <ion-card-content>
+        <ion-text class="text-recuerda">
+          <p class="text-recuerda">Recuerda: No ingreses el código si aún no has recibido el producto. Si lo ingresas, lo haces bajo tu responsabilidad.</p>
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
+    
     <ion-item>
       <ion-label position="floating">Ingresa el código de 5 dígitos</ion-label>
       <ion-grid>
@@ -60,7 +65,7 @@
     <ion-text class="text-color">
       <div style="text-align: center;">
         <ng-container *ngIf="codigoCorrecto; else otroContenido">
-          <p>Correcto!!</p>
+          <p>Correcto. Has recibido tu producto ahora realiza el pago y entrega el código de verificación al trabajor</p>
         </ng-container>
         <ng-template #otroContenido>
           <p>El código no es correcto</p>
@@ -70,6 +75,6 @@
     
 
     <ion-button type="submit" expand="block" [disabled]="!AdForm.valid" (click)="validar()" color="tertiary">Validar</ion-button>
-    <ion-button type="submit" expand="block" [disabled]="!AdForm.valid" (click)="presentModal()" color="tertiary" *ngIf="codigoCorrecto">Siguiente</ion-button>
+    <ion-button type="submit" expand="block" [disabled]="!AdForm.valid" (click)="presentModal()" color="tertiary" *ngIf="codigoCorrecto">Realizar Pago</ion-button>
   </form>
 </ion-content>

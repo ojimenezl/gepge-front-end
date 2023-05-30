@@ -51,7 +51,7 @@ export class EditAdPage implements OnInit {
 
   constructor(private geolocation: Geolocation,private nativeGeocoder: NativeGeocoder,public zone: NgZone,private activatedRoute: ActivatedRoute,private formBuilder: FormBuilder, private router: Router,private http: HttpClient) {
     this.ad = this.router.getCurrentNavigation()?.extras?.state?.['ad'];
-    console.log(this.ad.lugarAnunciante);
+    //console.log(this.ad.lugarAnunciante);
     
     this.AdForm = this.formBuilder.group({
       titulo: ['', Validators.required],
@@ -97,11 +97,11 @@ export class EditAdPage implements OnInit {
 
   addAd() {
     const data = this.AdForm.value;
-    console.log(this.anuncioId); // imprimir el ID del anuncio
+    //console.log(this.anuncioId); // imprimir el ID del anuncio
     data.creador = localStorage.getItem('userId') || '';
   
     this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${this.anuncioId}`, data).subscribe(response => {
-      console.log(response);
+      //console.log(response);
       this.router.navigateByUrl('/feed');
       
     });
@@ -146,5 +146,8 @@ export class EditAdPage implements OnInit {
     this.autocomplete.input = ''
   }
   
+  goToHome() {
+    this.router.navigate(['/feed']);
 
+  }
 }

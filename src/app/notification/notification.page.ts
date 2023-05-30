@@ -79,7 +79,7 @@ export class NotificationPage implements OnInit {
   private isPageLoaded: boolean = false;
   constructor(private modalController: ModalController,private navCtrl: NavController, private router: Router, private http: HttpClient) {
     this.userId = localStorage.getItem('userId') || '';
-    console.log("userid ",this.userId);
+    //console.log("userid ",this.userId);
     
   }
 
@@ -90,11 +90,11 @@ export class NotificationPage implements OnInit {
   getNotifications() {
     this.http.get<ApiResponse>(`${this.baseUrl}/notificaciones/obtenerNotificacion`).subscribe(
       data => {
-        console.log(this.userId);
+       // console.log(this.userId);
         this.ads = data.clientes.sort((a, b) => new Date(b.fechaCreacion).getTime() - new Date(a.fechaCreacion).getTime());
         //this.ads  = this.ads.filter(ad => ad.correoAnunciante === this.userId || ad.correoTrabajador === this.userId || ad.para === this.userId);
         this.ads  = this.ads.filter(ad => ad.para === this.userId);
-        console.log('noti ',this.ads);
+       // console.log('noti ',this.ads);
       },
       error => {
         console.log(error);
@@ -105,27 +105,27 @@ export class NotificationPage implements OnInit {
 
 
   aceptar(ad: CreateNotificacion){
-    console.log('aqui 2',ad._idAnuncioHijo);
+   // console.log('aqui 2',ad._idAnuncioHijo);
     
     //ad.tipo="AceptacionTrabajador"
     //ad.correoTrabajador = ad.correoTrabajador
     ad.para = ad.correoTrabajador 
-    console.log('data notofocatons',ad._idAnuncio,ad._id);
+    //console.log('data notofocatons',ad._idAnuncio,ad._id);
     ad.estado='1'
     ad.EntregacodigoAnunciante='enEspera'
     ad.EntregacodigoTrabajador='enEspera'
     const id= ad._id
     delete ad._id;
     this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${ad._idAnuncio}`, ad).subscribe(response => {
-      console.log(response);    
+     // console.log(response);    
     });
     this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${ad._idAnuncioHijo}`, ad).subscribe(response => {
-      console.log(response);    
+     // console.log(response);    
     });
     ad.tipo="Postulante"
     ad.para = this.userId
     this.http.put(`${this.baseUrl}/notificaciones/actualizarNotificacion/${id}`, ad).subscribe(response => {
-      console.log(response); 
+     // console.log(response); 
         
     });
     delete ad._id;
@@ -133,7 +133,7 @@ export class NotificationPage implements OnInit {
     ad.correoTrabajador = ad.correoTrabajador
     ad.para = ad.correoTrabajador
     this.http.post(`${this.baseUrl}/notificaciones/crearNotificacion`, ad).subscribe(response => {
-      console.log(response,'fin');
+     // console.log(response,'fin');
       this.router.navigateByUrl('/feed'); 
       
     });
@@ -143,7 +143,7 @@ export class NotificationPage implements OnInit {
 
     this.http.get<Cliente>(`${this.baseUrl}/clientes/obtenerTokenCliente/${ad.correoTrabajador}`).subscribe(
       gettoken => {
-        console.log(gettoken.cliente);
+       // console.log(gettoken.cliente);
         
     const token = gettoken.cliente;
     const body = {
@@ -158,7 +158,7 @@ export class NotificationPage implements OnInit {
       'Authorization': this.keyFCM
     });
     this.http.post('https://fcm.googleapis.com/fcm/send', body, { headers }).subscribe(response => {
-      console.log('La notificación push fue enviada correctamente', response);
+      console.log('La notificación push fue enviada correctamente');
     }, error => {
       console.error('Error al enviar la notificación push', error);
     });
@@ -170,15 +170,15 @@ export class NotificationPage implements OnInit {
       response => {
         this.adsString = JSON.stringify(response);
         const miObjetoParseado = JSON.parse(this.adsString);
-        console.log("obj",miObjetoParseado);
-        console.log("length",miObjetoParseado.anuncios.length);
+        //console.log("obj",miObjetoParseado);
+        //console.log("length",miObjetoParseado.anuncios.length);
         // Acceder a la propiedad
         for (let i = 0; i < miObjetoParseado.anuncios.length; i++) {
           if (miObjetoParseado.anuncios[i].postulante !== ad.correoTrabajador) {
           ad.para = miObjetoParseado.anuncios[i].postulante;
           ad.tipo='noSeleccionado'
           this.http.post(`${this.baseUrl}/notificaciones/crearNotificacion`, ad).subscribe(response => {
-            console.log(response,'fin');
+           // console.log(response,'fin');
             
           });
           }
@@ -214,7 +214,7 @@ export class NotificationPage implements OnInit {
     if (confirm('¿Estás seguro de que quieres eliminar la notificacion?')) {
       this.http.delete(`${this.baseUrl}/notificaciones/eliminarNotificacion/${ad._id}`).subscribe(
         response => {
-          console.log(response);
+         // console.log(response);
           // Actualizar la lista de anuncios después de la eliminación
           this.getNotifications();
         },
@@ -226,18 +226,18 @@ export class NotificationPage implements OnInit {
   }
   rechazar(ad: Notificacion){
     if (confirm('¿Estás seguro de que quieres rechazar al postulante?')) {
-      console.log("rechazado ",ad);
+      console.log("rechazado ");
       
       this.http.delete(`${this.baseUrl}/notificaciones/eliminarNotificacion/${ad._id}`).subscribe(
         response => {
-          console.log(response);
+          //console.log(response);
           const noti= {
             para: ad.correoTrabajador,
             tipo:'Rechazado'
           }
           
           this.http.post(`${this.baseUrl}/notificaciones/crearNotificacion`, noti).subscribe(response => {
-            console.log(response,'fin');
+            //console.log(response,'fin');
             this.router.navigateByUrl('/feed'); 
             
           });
@@ -262,12 +262,12 @@ export class NotificationPage implements OnInit {
 
   eliminarAnuncio(ad:any) {
     const id = ad._idAnuncio;
-    console.log(ad._idAnuncio);
+    //console.log(ad._idAnuncio);
     
     const correoTrabajador = ad.correoTrabajador;
     this.http.delete(`${this.baseUrl}/anuncios/eliminarAnunciosHijos/${id}/${correoTrabajador}`).subscribe(
       response => {
-        console.log(response);
+      //  console.log(response);
         // Actualizar la lista de anuncios después de la eliminación
         //this.getAds();
       },

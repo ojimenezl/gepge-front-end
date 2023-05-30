@@ -16,25 +16,28 @@
     <ion-item>
       <ion-label position="floating">¿Qué necesitas?</ion-label>
       <ion-select formControlName="titulo">
-        <ion-select-option value="servicio profesional">Servicio Profesional </ion-select-option>
-        <ion-select-option value="encomienda">Encomienda</ion-select-option>
+        <ion-select-option value="Servicio Profesional">Servicio Profesional</ion-select-option>
+        <ion-select-option value="Encomienda">Encomienda</ion-select-option>
+        <ion-select-option value="Alquiler">Alquiler</ion-select-option>
+        <ion-select-option value="Empleo Fijo">Empleo Fijo</ion-select-option>
+
       </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Describe lo que necesitas</ion-label>
-      <ion-textarea formControlName="descripcion"></ion-textarea>
+      <ion-textarea formControlName="descripcion" placeholder="Ej: Necesito una persona que me ayude...."></ion-textarea>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Ingresa un precio</ion-label>
-      <ion-input type="number" step="0.01" formControlName="precioAnunciante"></ion-input>
+      <ion-label position="floating">Ingresa el precio</ion-label>
+      <ion-input type="number" step="0.01" formControlName="precioAnunciante" placeholder="$0.00"></ion-input>
     </ion-item>
 
 
   
     <ion-item>
-      <ion-label>En que lugar te encuentras</ion-label>
+      <ion-label>Ingrese el lugar del trabajo</ion-label>
     </ion-item>
     <ion-item>
       <ion-searchbar class="serch-map" formControlName="lugarAnunciante" [(ngModel)]="autocomplete.input" (ionInput)="UpdateSearchResults()" placeholder="Search for a place" (ionClear)="ClearAutocomplete()"></ion-searchbar>
@@ -47,23 +50,23 @@
     </ion-list>
     
     <ion-item>
-      <ion-label>¿Necesita taxi?</ion-label>
+      <ion-label>¿El trabajdor necesita ir en taxi?</ion-label>
       <ion-toggle formControlName="transporte"></ion-toggle>
     </ion-item> 
 
     <ion-item>
-      <ion-label>Selecciona la hora</ion-label>
+      <ion-label>¿Hora de la entrega?</ion-label>
       <ion-input type="time" formControlName="tiempoAnunciante"></ion-input>
     </ion-item>
  
     <ion-item>
-      <ion-label position="stacked">Tu pago va a ser</ion-label>
+      <ion-label position="stacked">El pago será</ion-label>
       <ion-select formControlName="tipoPago">
         <ion-select-option value="efectivo">Efectivo</ion-select-option>
         <ion-select-option value="transferencia">Transferencia</ion-select-option>
       </ion-select>
     </ion-item>
 
-    <ion-button type="submit" expand="block" [disabled]="!AdForm.valid" color="tertiary">Registrar</ion-button>
+    <ion-button type="submit" expand="block" [disabled]="!AdForm.valid" color="tertiary">Publicar</ion-button>
   </form>
 </ion-content>

@@ -76,7 +76,7 @@ export class MisTrabajosPage implements OnInit {
     });
     this.ad = {} as Anuncio;
     this.userId = localStorage.getItem('userId') || '';
-    console.log("recive userid ",this.userId,"<--");
+    //console.log("recive userid ",this.userId,"<--");
   }
 
   ngOnInit() {
@@ -109,7 +109,7 @@ export class MisTrabajosPage implements OnInit {
       data => {
         this.ads = data.clientes.sort((a, b) => new Date(b.fechaCreacion).getTime() - new Date(a.fechaCreacion).getTime());
         this.ads  = this.ads.filter(ad => ad.postulante === this.userId);
-        console.log(this.ads);
+      //  console.log(this.ads);
         
       },
       error => {
@@ -134,34 +134,34 @@ export class MisTrabajosPage implements OnInit {
     
   // }
   handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
-    console.log('Before complete', this.ads);
+    //console.log('Before complete', this.ads);
     this.ads = ev.detail.complete(this.ads);
-    console.log('After complete', this.ads);
+   // console.log('After complete', this.ads);
     localStorage.setItem('miListaTrabajos', JSON.stringify(this.ads));
   }
   eliminateAd(id: any){
     if (confirm('¿Estás seguro de que quieres dejar este trabajo?'+id)) {
       this.http.delete(`${this.baseUrl}/anuncios/eliminarAnuncio/${id}`).subscribe(
         response => {
-          console.log(response);
+         // console.log(response);
           // Actualizar la lista de anuncios después de la eliminación
           this.adsString = JSON.stringify(response);
           const miObjetoParseado = JSON.parse(this.adsString);
-          console.log("obj",miObjetoParseado.anuncios.correoAnunciante);
-          console.log("length",miObjetoParseado.anuncios.length);
+         // console.log("obj",miObjetoParseado.anuncios.correoAnunciante);
+         // console.log("length",miObjetoParseado.anuncios.length);
          
             miObjetoParseado.anuncios.para = miObjetoParseado.anuncios.correoAnunciante;
             delete miObjetoParseado.anuncios.fechaCreacion;
             miObjetoParseado.anuncios.tipo='RenunciaDelTrabajador'
             this.http.post(`${this.baseUrl}/notificaciones/crearNotificacion`, miObjetoParseado.anuncios).subscribe(response => {
-              console.log(response,'notificacion eliminsado');
+            //  console.log(response,'notificacion eliminsado');
               
             });
             const ad={
               estado: "0"
             }
             this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${miObjetoParseado.anuncios.idAnuncioPrincipal}`, ad).subscribe(response => {
-              console.log(response);
+            //  console.log(response);
               
               });
             //}
@@ -182,7 +182,7 @@ export class MisTrabajosPage implements OnInit {
     this.isModalOpen = isOpen; 
   }
   goToEstadoTrabajador(ad: Anuncio){
-    console.log("listo",ad.idAnuncioPrincipal);   
+    //console.log("listo",ad.idAnuncioPrincipal);   
     this.http.get<ApiResponse>(`${this.baseUrl}/anuncios/obtenerAnuncio/${ad.idAnuncioPrincipal}`).subscribe(
       data => {
         const navigationExtras: NavigationExtras = {
@@ -198,7 +198,8 @@ export class MisTrabajosPage implements OnInit {
         
   }
   goToHome() {
-    this.router.navigateByUrl('/feed');
+    this.router.navigate(['/feed']);
+
   }
 
 }

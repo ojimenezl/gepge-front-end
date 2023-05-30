@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package io.ionic.starter.jobox;
 
 import com.getcapacitor.BridgeActivity;
 

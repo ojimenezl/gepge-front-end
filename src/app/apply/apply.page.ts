@@ -146,7 +146,7 @@ export class ApplyPage implements OnInit {
   addAd() {
     
     const data = this.AdForm.value;
-    console.log('aqui ',data);
+    //console.log('aqui ',data);
 
     
     //mi anuncio al que postule
@@ -161,7 +161,7 @@ export class ApplyPage implements OnInit {
         let jsonData = response.cliente;
         this.id_new_Anuncio = jsonData._id;
         localStorage.setItem('idAnuncioHijo', this.id_new_Anuncio);
-        console.log("aquiii new", this.id_new_Anuncio);
+        //console.log("aquiii new", this.id_new_Anuncio);
     
         data.correoTrabajador = localStorage.getItem('userId') || '';
         data.correoAnunciante = this.ad.creador;
@@ -169,12 +169,12 @@ export class ApplyPage implements OnInit {
         data.para = this.ad.creador;
         data._idAnuncio = this.ad._id;
         data._idAnuncioHijo = localStorage.getItem('idAnuncioHijo') || '';
-        console.log('envio notificaion al anunciante ', localStorage.getItem('idAnuncioHijo') || '');
+       // console.log('envio notificaion al anunciante ', localStorage.getItem('idAnuncioHijo') || '');
         ///
 
         this.http.get<Cliente>(`${this.baseUrl}/clientes/obtenerTokenCliente/${this.ad.creador}`).subscribe(
           gettoken => {
-            console.log(gettoken.cliente);
+            //console.log(gettoken.cliente);
             
         const token = gettoken.cliente;
         const body = {
@@ -189,7 +189,7 @@ export class ApplyPage implements OnInit {
           'Authorization': this.keyFCM
         });
         this.http.post('https://fcm.googleapis.com/fcm/send', body, { headers }).subscribe(response => {
-          console.log('La notificación push fue enviada correctamente', response);
+          //console.log('La notificación push fue enviada correctamente', response);
         }, error => {
           console.error('Error al enviar la notificación push', error);
         });
@@ -199,7 +199,7 @@ export class ApplyPage implements OnInit {
         
       })
     ).subscribe(response => {
-      console.log(response);
+      //console.log(response);
     });
     
 
@@ -210,7 +210,7 @@ export class ApplyPage implements OnInit {
     //cambio estado al anuncio ya que hay un postulado
     this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${this.ad._id}`, data).subscribe(response => {
       
-    console.log(this.id_new_Anuncio);
+    //console.log(this.id_new_Anuncio);
     });
     this.router.navigateByUrl('/feed');
     

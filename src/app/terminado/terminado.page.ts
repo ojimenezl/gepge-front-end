@@ -66,7 +66,7 @@ export class TerminadoPage implements OnInit {
         if (this.AdForm) {
           this.AdForm.get('tipoPago')?.setValue(this.tipoPago);
         }
-        console.log("id trabajador",this.anuncioId);
+      //  console.log("id trabajador",this.anuncioId);
             
         this.http.get<ApiResponse>(`${this.baseUrl}/anuncios/obtenerAnuncio/${this.anuncioId}`).subscribe(
           data => {
@@ -82,13 +82,13 @@ export class TerminadoPage implements OnInit {
               const min = 10000; // El número mínimo de 5 dígitos
               const max = 99999; // El número máximo de 5 dígitos
               const randomNumber = Math.floor(Math.random() * (max - min + 1) + min);
-              console.log(randomNumber); // Muestra el número aleatorio generado
+             // console.log(randomNumber); // Muestra el número aleatorio generado
               const data = {
                 codigoTrabajador: randomNumber
               };
               this.codigo=randomNumber.toString()
               this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${this.anuncioId}`, data).subscribe(response => {
-                console.log(response);                
+             //   console.log(response);                
               });
             }
           
@@ -129,7 +129,8 @@ export class TerminadoPage implements OnInit {
     return await modal.present();
   }
   goToHome() {
-    this.router.navigateByUrl('/feed');
+    this.router.navigate(['/feed']);
+
   }
 
 }

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Advertencia
+      Código
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismiss()">Cerrar</ion-button>
@@ -12,8 +12,8 @@
 <ion-content>
   <ion-text class="text-color" *ngIf="Terminado">
     <h2>Advertencia</h2>
-    <p>Ingresa el código solo cuando hayas recibido el pago.</p>
-    <ion-button (click)="scrollToBottom()">Mostrar</ion-button>
+    <p>Debes pedir el código al anunciante. Recuerda, ingresa el código solo cuando hayas recibido el pago. Si ingresas el código y aún NO has recibido el pago es bajo tu responsabilidad</p>
+    <ion-button (click)="scrollToBottom()">Ingresar código</ion-button>
   </ion-text>
   <ion-text class="text-color" *ngIf="Terminado">
     <form [formGroup]="AdForm" (ngSubmit)="addAd()">
@@ -42,7 +42,7 @@
       <ion-text class="text-color">
         <div style="text-align: center;">
           <ng-container *ngIf="codigoCorrecto; else otroContenido">
-            <p>Correcto!!</p>
+            <p>Correcto. Has terminado tu trabajo muy bien!!. Puedes regresar al inicio.</p>
           </ng-container>
           <ng-template #otroContenido>
             <p>El código no es correcto</p>
@@ -59,7 +59,7 @@
 
   <ion-text class="text-color" *ngIf="Recibido">
     <h2>Advertencia</h2>
-    <p>Entrega tu código solo cuando hayas recibido el producto.</p>
+    <p>Entrega tu código solo cuando hayas recibido el producto y realizado tu pago.</p>
     <ion-button (click)="scrollToBottom()">Mostrar</ion-button>
   </ion-text>
 

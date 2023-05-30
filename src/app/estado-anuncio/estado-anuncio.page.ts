@@ -82,17 +82,17 @@ ionViewDidEnter() {
 }
   addAd() {
     const data = this.AdForm.value;
-    console.log(this.anuncioId); // imprimir el ID del anuncio
+    //console.log(this.anuncioId); // imprimir el ID del anuncio
     data.creador = localStorage.getItem('userId') || '';
   
     this.http.put(`${this.baseUrl}/anuncios/actualizarAnuncio/${this.anuncioId}`, data).subscribe(response => {
-      console.log(response);
+      //console.log(response);
       this.router.navigateByUrl('/feed');
       
     });
   }
   goToRecibir(){
-    console.log("envio recibir ",this.ad.tipoPago);
+    //console.log("envio recibir ",this.ad.tipoPago);
     const navigationExtras: NavigationExtras = {
       state: {
         anuncioId: this.anuncioId,
@@ -103,5 +103,8 @@ ionViewDidEnter() {
     this.router.navigateByUrl('/recibir', navigationExtras);
 
   }
+  goToHome() {
+    this.router.navigate(['/feed']);
 
+  }
 }

@@ -83,7 +83,7 @@ export class MisPublicacionesPage implements OnInit {
     });
     this.ad = {} as Anuncio;
     this.userId = localStorage.getItem('userId') || '';
-    console.log("recive userid ",this.userId,"<--");
+    //console.log("recive userid ",this.userId,"<--");
   }
 
   ngOnInit() {
@@ -129,32 +129,32 @@ export class MisPublicacionesPage implements OnInit {
   }
   addAd() {
     const data = this.AdForm.value;
-    console.log(data);
+   // console.log(data);
     data.correoTrabajador = localStorage.getItem('userId') || '';
     this.http.post(`${this.baseUrl}/notificaciones/crearNotificacion`, data).subscribe(response => {
-      console.log(response);
+     // console.log(response);
     });
     data.postulante = localStorage.getItem('userId') || '';
     this.http.post(`${this.baseUrl}/anuncios/crearAnuncio`, data).subscribe(response => {
-      console.log(response);
+     // console.log(response);
     });
     this.router.navigateByUrl('/feed');
     
   }
   handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
-    console.log('Before complete', this.ads);
+    //console.log('Before complete', this.ads);
     this.ads = ev.detail.complete(this.ads);
-    console.log('After complete', this.ads);
+   // console.log('After complete', this.ads);
     localStorage.setItem('miListaPublicaciones', JSON.stringify(this.ads));
   }
   eliminateAd(id: any){
-    if (confirm('¿Estás seguro de que quieres eliminar este anuncio?'+id)) {
+    if (confirm('¿Estás seguro de que quieres eliminar este anuncio?')) {
         this.http.delete(`${this.baseUrl}/anuncios/eliminarAnuncios/${id}`).subscribe(
         response => {
           this.adsString = JSON.stringify(response);
           const miObjetoParseado = JSON.parse(this.adsString);
-          console.log("obj",miObjetoParseado);
-          console.log("length",miObjetoParseado.anuncios.length);
+         // console.log("obj",miObjetoParseado);
+         // console.log("length",miObjetoParseado.anuncios.length);
           // Acceder a la propiedad
           for (let i = 0; i < miObjetoParseado.anuncios.length; i++) {
             if (miObjetoParseado.anuncios[i].postulante !== this.userId) {
@@ -163,7 +163,7 @@ export class MisPublicacionesPage implements OnInit {
 
             miObjetoParseado.anuncios[i].tipo='AnuncioEliminado'
             this.http.post(`${this.baseUrl}/notificaciones/crearNotificacion`, miObjetoParseado.anuncios[i]).subscribe(response => {
-              console.log(response,'notificacion eliminsado');
+         //     console.log(response,'notificacion eliminsado');
               
             });
             }
@@ -178,7 +178,7 @@ export class MisPublicacionesPage implements OnInit {
   
 
   setOpen(isOpen: boolean,ad: Anuncio) {
-    console.log("ver1 ",ad);
+    //console.log("ver1 ",ad);
     
     if(isOpen){
       this.currentAd = ad;    
@@ -187,7 +187,7 @@ export class MisPublicacionesPage implements OnInit {
   }
   
   goToEstado(ad: Anuncio){
-    console.log("listo",ad);       
+    //console.log("listo",ad);       
         const navigationExtras: NavigationExtras = {
           state: {
             ad: ad,
@@ -202,7 +202,7 @@ export class MisPublicacionesPage implements OnInit {
     
   }
   goToHome() {
-    this.router.navigateByUrl('/feed');
+    this.router.navigate(['/feed']);
 
 
   }
